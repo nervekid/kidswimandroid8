@@ -22,6 +22,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,8 +34,8 @@ public class MainActivity extends AppCompatActivity {
 
         //在此尝试获取SharedPreferences对象信息
         SharedPreferences sharedPreferences = getSharedPreferences("loginUserToken", Context.MODE_PRIVATE);
-        String userName = sharedPreferences.getString("userName", "");
-        System.out.println("当前登录人" + userName);
+        String userName = sharedPreferences.getString("loginNameStr", "");
+        Toast.makeText(MainActivity.this, "登入用户=" + userName, Toast.LENGTH_SHORT).show();
 
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);

@@ -4,21 +4,33 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
+import android.os.Looper;
+import android.os.Message;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
-import com.alibaba.fastjson.JSON;
 
-import com.alibaba.fastjson.JSONObject;
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.RequestParams;
-import com.loopj.android.http.TextHttpResponseHandler;
+import androidx.appcompat.app.AppCompatActivity;
 
-import cz.msebera.android.httpclient.Header;
+
+import com.kid.kidswim.command.UserInfo;
+import com.kid.kidswim.enums.KidswimAttEnum;
+import com.kid.kidswim.utlis.JsonUtil;
+
+import java.io.IOException;
+import java.util.Map;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.RequestBody;
+
 public class LoginActivity extends AppCompatActivity {
     private EditText account;
     private EditText password;
+    public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,61 +43,73 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void LoginAsyncHttpClient(View view){
-        String name=account.getText().toString();
-        String pass=password.getText().toString();
+        //获取用户名的值
+        String name=account.getText().toString().trim();
+        //获取密码的值
+        String pass=password.getText().toString().trim();
 
-        //保存用户信息，创建一个SharedPreferences对象
-        SharedPreferences sharedPreferences = getSharedPreferences("loginUserToken", Context.MODE_PRIVATE);
-        //实例化对象
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        //将用户名称(手机号码)保存
-        editor.putString("userName", name);
+        //获取网络上的servlet路径
+        String path="http://120.79.137.103:10080/kidswim/att/hall/login";
+        OkHttpClient client = new OkHttpClient();
+        RequestBody body = new FormBody.Builder()
+                .add("userLoginName", name)
+                .add("userPassword", pass)
+                .build();
+        okhttp3.Request request = new okhttp3.Request.Builder()
+                .url(path)
+                .post(body)
+                .build();
+        Call call = client.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Message message = Message.obtain();
+                message.what = 0;
+                message.obj = e.getMessage();
+                Looper.prepare();
+                Toast.makeText(LoginActivity.this, "登入失败！", Toast.LENGTH_SHORT).show();
+            }
 
-        //提交数据
-        editor.commit();
+            @Override
+            public void onResponse(Call call, okhttp3.Response response) throws IOException {
+                Message message = Message.obtain();
+                message.what = 1;
+                message.obj = response.body().string();
+
+                String objStr =  message.obj.toString();
+                JsonUtil jsonUtil = new JsonUtil();
+                UserInfo userInfo = jsonUtil.json2Object(objStr, UserInfo.class);
+                if (userInfo.getStatus().equals(KidswimAttEnum.successOrFail.成功.getName())) {
+                    String loginNameStr =  userInfo.getUser().getUserName();
+                    String loginId = userInfo.getUser().getId();
+                    String loginPhone = userInfo.getUser().getPhone();
+                    //保存用户信息，创建一个SharedPreferences对象
+                    SharedPreferences sharedPreferences = getSharedPreferences("loginUserToken", Context.MODE_PRIVATE);
+                    //实例化对象
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    //将用户名称(手机号码)保存
+                    editor.putString("loginNameStr", loginNameStr);
+                    editor.putString("loginId", loginId);
+                    editor.putString("loginPhone", loginPhone);
+                    //提交数据
+                    editor.commit();
+
+                    Looper.prepare();
+                    Toast.makeText(LoginActivity.this, "登入成功！", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+                else {
+                    Looper.prepare();
+                    Toast.makeText(LoginActivity.this, "密码或者登录名错误，登入失败！", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
 
-        System.out.println("跳转页面1");
-        Toast.makeText(LoginActivity.this, "登录成功！", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-        startActivity(intent);
-        //关闭当前界面
-        finish();
-//        //获取用户名的值
-//        String name=account.getText().toString();
-//        //获取密码的值
-//        String pass=password.getText().toString();
-//        //获取网络上的servlet路径
-//        String path="http://192.168.1.14:8080/myerp/login.action";
-//        //使用第三方
-//        AsyncHttpClient ahc=new AsyncHttpClient();
-//        //请求参数
-//        RequestParams params=new RequestParams();
-//        //给请求参数设键和值（键的名字和web后台保持一致）
-//        params.put("name",name);
-//        params.put("pwd",pass);
-//        //设值提交方式
-//        ahc.post(this,path,params,new TextHttpResponseHandler(){
-//            @Override
-//            public void onFailure(int statusCode, Header[] headers, String responseBody, Throwable error) {
-//                //super.onFailure(statusCode, headers, responseBody, error);
-//            }
-//
-//            @Override
-//            public void onSuccess(int statusCode, Header[] headers, String responseBody) {
-//                System.out.println("服务器返回的内容为："+responseBody);
-//                JSONObject obj = (JSONObject)JSON.parse(responseBody);
-//                String result = obj.getString("result");
-//                //吐司Android studio与web后台数据交互获得的值
-//                Toast.makeText(LoginActivity.this, obj.getString("message"), Toast.LENGTH_SHORT).show();
-//                if(result.equals("success")){
-//                    System.out.println("跳转页面");
-//                    Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-//                    startActivity(intent);
-//                    //关闭当前界面
-//                    finish();
-//                }
-//            }
-//        });
+
+
+
     }
 }
