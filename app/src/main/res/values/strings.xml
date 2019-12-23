@@ -8,8 +8,8 @@
     <string name="action_settings">Settings</string>
 
     <string name="menu_home">基本信息</string>
-    <string name="menu_gallery">上課點名</string>
-    <string name="menu_slideshow">學員調班</string>
+    <string name="menu_gallery">学员分组</string>
+    <string name="menu_slideshow">课程点名</string>
     <string name="menu_tools">錄入學生</string>
     <string name="menu_share">Share</string>
     <string name="menu_send">Send</string>
