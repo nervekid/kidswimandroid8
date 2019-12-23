@@ -5,7 +5,10 @@
     <string name="nav_header_title">Android Studio</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
+
+    <string name="action_add_group">新建分组</string>
+    <string name="action_add_group_details">学员加入分组</string>
+
 
     <string name="menu_home">基本信息</string>
     <string name="menu_gallery">学员分组</string>

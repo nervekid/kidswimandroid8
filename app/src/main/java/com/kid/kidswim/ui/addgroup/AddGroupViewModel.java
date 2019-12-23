@@ -1,16 +1,15 @@
-package com.kid.kidswim.ui.gallery;
+package com.kid.kidswim.ui.addgroup;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class GalleryViewModel extends ViewModel {
-
+public class AddGroupViewModel extends ViewModel {
     private MutableLiveData<String> mText;
 
-    public GalleryViewModel() {
+    public AddGroupViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("分组列表");
+        mText.setValue("新建分组");
     }
 
     public LiveData<String> getText() {

@@ -6,14 +6,14 @@ import androidx.lifecycle.ViewModel;
 
 public class SendViewModel extends ViewModel {
 
-    private MutableLiveData<String> mText;
+  private MutableLiveData<String> mText;
 
-    public SendViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is send fragment");
-    }
+  public SendViewModel() {
+    mText = new MutableLiveData<>();
+    mText.setValue("This is send fragment");
+  }
 
-    public LiveData<String> getText() {
-        return mText;
-    }
+  public LiveData<String> getText() {
+    return mText;
+  }
 }

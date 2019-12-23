@@ -7,14 +7,19 @@ import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import android.view.MenuItem;
 import android.view.View;
 
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
+import com.kid.kidswim.ui.addgroup.AddGroupFragment;
+import com.kid.kidswim.ui.gallery.GalleryFragment;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -67,6 +72,25 @@ public class MainActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        /**
+         * 菜单项被点击时调用，也就是菜单项的监听方法。
+         * 通过这几个方法，可以得知，对于Activity，同一时间只能显示和监听一个Menu 对象。 TODO Auto-generated
+         * method stub
+         */
+        //跳转到新建分组
+        if (item.getItemId() == 2131230760) {
+
+        }
+        //跳转到加入分组明细1599
+        else if (item.getItemId() == 2131230761) {
+
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
