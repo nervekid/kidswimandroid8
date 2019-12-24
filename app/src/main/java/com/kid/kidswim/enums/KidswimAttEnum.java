@@ -25,4 +25,29 @@ public class KidswimAttEnum {
             this.name = name;
         }
     }
+
+    public enum kidswimFlag {
+
+        課程地址("course_addrese_flag"),
+        遇溺地點("drowned_address_flag"),
+        收費標準("cost_standard_flag"),
+        付款方式("pay_type"),
+        課程對應級別("course_level"),
+        點名狀態("rollCall_status_flag"),
+        性別("sex_flag"),
+        證書類別("certificate_categor");
+        private String name;
+
+        private kidswimFlag(String name) {
+            this.name = name;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+    }
 }

@@ -39,15 +39,6 @@ public class HomeFragment extends Fragment {
         //找到登录名称
         final TextView userNameTextView = root.findViewById(R.id.user_name);
 
-        final Button button = root.findViewById(R.id.button);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                NavController navController = Navigation.findNavController(v);
-                navController.navigate(R.id.nav_gallery);
-            }
-        });
-
         //在此尝试获取SharedPreferences对象信息
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("loginUserToken", Context.MODE_PRIVATE);
         String userName = sharedPreferences.getString("loginNameStr", "");

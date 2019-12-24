@@ -6,20 +6,40 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".LoginActivity">
+
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="99dp"
+        android:text="欢迎进入泳会系统"
+        android:textAlignment="center"
+        android:textColor="#009688"
+        android:textSize="36sp" />
+
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="請輸入電話號碼"
+        android:layout_marginTop="89dp"
         android:id="@+id/uname" />
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="請輸入密碼"
+        android:layout_marginTop="9dp"
         android:inputType="textPassword"
         android:id="@+id/upass" />
+
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="89dp"
+        android:layout_marginBottom="16dp"
+        android:background="#009688"
+        android:onClick="LoginAsyncHttpClient"
         android:text="登入"
-        android:onClick="LoginAsyncHttpClient" />
+        android:textColor="#FFFFFF"
+        android:textSize="24sp" />
+
 </LinearLayout>
