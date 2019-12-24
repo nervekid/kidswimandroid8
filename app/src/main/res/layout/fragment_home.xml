@@ -12,10 +12,8 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="64dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="177dp"
         android:textAlignment="center"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -49,18 +47,14 @@
         app:layout_constraintStart_toStartOf="@+id/user_logo"
         app:layout_constraintTop_toBottomOf="@+id/user_logo" />
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="303dp"
-        android:layout_height="290dp"
-        android:layout_marginStart="9dp"
-        android:layout_marginEnd="11dp"
-        android:layout_marginBottom="100dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/textView3"
-        app:layout_constraintHorizontal_bias="0.342"
-        app:layout_constraintStart_toStartOf="@+id/user_logo"
-        app:layout_constraintTop_toBottomOf="@+id/text_home"></LinearLayout>
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="37dp"
+        android:layout_marginEnd="9dp"
+        android:text="Button"
+        app:layout_constraintEnd_toEndOf="@+id/user_logo"
+        app:layout_constraintTop_toBottomOf="@+id/user_name" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

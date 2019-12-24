@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow,
-                R.id.nav_tools, R.id.nav_share, R.id.nav_send)
+                R.id.nav_tools, R.id.nav_share, R.id.nav_send,R.id.nav_addgroup)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
@@ -83,7 +83,8 @@ public class MainActivity extends AppCompatActivity {
          */
         //跳转到新建分组
         if (item.getItemId() == 2131230760) {
-
+            NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+            navController.navigate(R.id.nav_gallery);
         }
         //跳转到加入分组明细1599
         else if (item.getItemId() == 2131230761) {
