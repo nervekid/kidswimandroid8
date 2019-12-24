@@ -23,7 +23,7 @@ public class AddGroupFragment extends Fragment {
         addGroupViewModel = ViewModelProviders.of(this).get(AddGroupViewModel.class);
         View root = inflater.inflate(R.layout.fragment_add_group, container, false);
         final TextView textView = root.findViewById(R.id.text_add_group);
-
+        String str = (String) getArguments().get("theKey");
         addGroupViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
