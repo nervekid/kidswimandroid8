@@ -84,11 +84,12 @@ public class MainActivity extends AppCompatActivity {
         //跳转到新建分组
         if (item.getItemId() == 2131230760) {
             NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-            navController.navigate(R.id.nav_gallery);
+            navController.navigate(R.id.nav_addgroup);
         }
         //跳转到加入分组明细1599
         else if (item.getItemId() == 2131230761) {
-
+            NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+            navController.navigate(R.id.nav_addgroup_details);
         }
 
         return super.onOptionsItemSelected(item);
