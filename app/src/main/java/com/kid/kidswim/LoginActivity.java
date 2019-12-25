@@ -94,8 +94,6 @@ public class LoginActivity extends AppCompatActivity {
                     //提交数据
                     editor.commit();
 
-                    Looper.prepare();
-                    Toast.makeText(LoginActivity.this, "登入成功！", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
                     finish();
@@ -103,6 +101,7 @@ public class LoginActivity extends AppCompatActivity {
                 else {
                     Looper.prepare();
                     Toast.makeText(LoginActivity.this, "密码或者登录名错误，登入失败！", Toast.LENGTH_SHORT).show();
+                    Looper.loop();
                 }
             }
         });

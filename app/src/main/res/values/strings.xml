@@ -11,7 +11,7 @@
 
 
     <string name="menu_home">基本信息</string>
-    <string name="menu_gallery">学员分组</string>
+    <string name="menu_gallery">分组列表</string>
     <string name="menu_slideshow">课程点名</string>
     <string name="menu_tools">錄入學生</string>
     <string name="menu_share">Share</string>
