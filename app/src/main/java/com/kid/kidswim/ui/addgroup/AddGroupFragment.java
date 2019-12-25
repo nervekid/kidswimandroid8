@@ -33,6 +33,7 @@ import com.kid.kidswim.command.SysCoachListInfo;
 import com.kid.kidswim.command.SysDictInfo;
 import com.kid.kidswim.command.UserInfo;
 import com.kid.kidswim.enums.KidswimAttEnum;
+import com.kid.kidswim.events.AddGroupAddressEvent;
 import com.kid.kidswim.events.AddGroupEvent;
 import com.kid.kidswim.ui.gallery.GalleryViewModel;
 import com.kid.kidswim.utlis.JsonUtil;
@@ -62,12 +63,8 @@ public class AddGroupFragment extends Fragment {
         EventBus.getDefault().register(this);
         addGroupViewModel = ViewModelProviders.of(this).get(AddGroupViewModel.class);
         View root = inflater.inflate(R.layout.fragment_add_group, container, false);
-       // final TextView textView = root.findViewById(R.id.text_add_group);
         String str = (String) getArguments().get("theKey");
 
-       //this.findSysCoachList();
-//        this.findSysDictList(KidswimAttEnum.kidswimFlag.課程地址.getName());
-//        this.findSysDictList(KidswimAttEnum.kidswimFlag.課程對應級別.getName());
 
         //时间选择器
 //        TimePickerView pvTime = new TimePickerBuilder(getActivity(), new OnTimeSelectListener() {
@@ -79,14 +76,6 @@ public class AddGroupFragment extends Fragment {
 //        }).build();
 //        pvTime.setDate(Calendar.getInstance());
 //        pvTime.show();
-
-
-//        addGroupViewModel.getText().observe(this, new Observer<String>() {
-//            @Override
-//            public void onChanged(@Nullable String s) {
-//                textView.setText(s);
-//            }
-//        });
         return root;
     }
 
@@ -95,17 +84,49 @@ public class AddGroupFragment extends Fragment {
 
         super.onActivityCreated(savedInstanceState);
         final Button btn = getActivity().findViewById(R.id.add_group_submin_btn);
+
+        //回调创建分组接口
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final TextView coachId_View = getActivity().findViewById(R.id.coath_choice_value_att);
-                String coachId = coachId_View.getText().toString();
+                final TextView address_View = getActivity().findViewById(R.id.address_choice_value_att);
+                final TextView beginDateStr_View = getActivity().findViewById(R.id.begin_date_choice_value_att);
+                final TextView endDateStr_View = getActivity().findViewById(R.id.end_date_choice_value_att);
+                final TextView learnBeginTimeStr_View = getActivity().findViewById(R.id.learn_begin_choice_value_att);
+                final TextView courselevel_View = getActivity().findViewById(R.id.course_level_choice_value_att);
+
+                String coachId = coachId_View.getText().toString().trim();
+                String address = address_View.getText().toString().trim();
+                String beginDateStr = beginDateStr_View.getText().toString().trim();
+                String endDateStr = endDateStr_View.getText().toString().trim();
+                String learnBeginTimeStr = learnBeginTimeStr_View.getText().toString().trim();
+                String courselevel = courselevel_View.getText().toString().trim();
+
+                if(coachId == null || coachId.equals("")) {
+
+                }
+                if(address == null || address.equals("")) {
+
+                }
+                if(beginDateStr == null || beginDateStr.equals("")) {
+
+                }
+                if(endDateStr == null || endDateStr.equals("")) {
+
+                }
+                if(learnBeginTimeStr == null || learnBeginTimeStr.equals("")) {
+
+                }
+                if(courselevel == null || courselevel.equals("")) {
+
+                }
+
+                //此处调用接口
             }
         });
 
-
-
-
+        //教练栏点击事件
         final LinearLayout layout1 = getActivity().findViewById(R.id.add_group_linearLayout1);
         layout1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,7 +141,6 @@ public class AddGroupFragment extends Fragment {
                 call.enqueue(new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
-
                     }
                     @Override
                     public void onResponse(Call call, okhttp3.Response response) throws IOException {
@@ -131,21 +151,53 @@ public class AddGroupFragment extends Fragment {
                         String objStr =  message.obj.toString();
                         JsonUtil jsonUtil = new JsonUtil();
                         SysCoachListInfo sysCoachListInfo = jsonUtil.json2Object(objStr, SysCoachListInfo.class);
-
                         EventBus.getDefault().post(new AddGroupEvent(sysCoachListInfo));
                     }
                 });
             }
         });
 
-//
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
+        //地址栏点击事件
+        final LinearLayout layout2 = getActivity().findViewById(R.id.add_group_linearLayout2);
+        layout2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //获取网络上的servlet路径
+                String path="http://120.79.137.103:10080/kidswim/att/base/findDictListByType";
+                OkHttpClient client = new OkHttpClient();
+                RequestBody body = new FormBody.Builder()
+                        .add("type", KidswimAttEnum.kidswimFlag.課程地址.getName())
+                        .build();
+                okhttp3.Request request = new okhttp3.Request.Builder()
+                        .url(path)
+                        .post(body)
+                        .build();
+                Call call = client.newCall(request);
 
+                call.enqueue(new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                    }
+                    @Override
+                    public void onResponse(Call call, okhttp3.Response response) throws IOException {
+                        Message message = Message.obtain();
+                        message.what = 1;
+                        message.obj = response.body().string();
+
+                        String objStr =  message.obj.toString();
+                        JsonUtil jsonUtil = new JsonUtil();
+                        SysDictInfo sysDictInfo = jsonUtil.json2Object(objStr, SysDictInfo.class);
+                        EventBus.getDefault().post(new AddGroupAddressEvent(sysDictInfo));
+                    }
+                });
+            }
+        });
     }
+
+    /**
+     * onEvent事件，设置教练选择器
+     * @param event
+     */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(AddGroupEvent event) {
         SysCoachListInfo s = event.getSysCoachListInfo();
@@ -168,113 +220,6 @@ public class AddGroupFragment extends Fragment {
         }
         pvOptions.setPicker(nameList);
         pvOptions.show();
-    }
-
-        /**
-         * 显示教练选择器
-         */
-    public void showCoachSelector(View view) {
-
-    }
-
-    /**
-     * 显示课程地址选择器
-     */
-    private void showAddressSelector() {
-
-    }
-
-    /**
-     * 显示课程级别选择器
-     */
-    private void showCourseLevelSelector() {
-
-    }
-
-    private void showBeginDateSelector() {
-
-    }
-
-    private void showEndDateSelector() {
-
-    }
-
-    private void showLeanBgeinDateSelector() {
-
-    }
-
-    /**
-     * 得到字典列表
-     * @return
-     */
-    public void findSysDictList(String type) {
-        //获取网络上的servlet路径
-        String path="http://120.79.137.103:10080/kidswim/att/base/findDictListByType";
-        OkHttpClient client = new OkHttpClient();
-        RequestBody body = new FormBody.Builder()
-                .add("type", type)
-                .build();
-        okhttp3.Request request = new okhttp3.Request.Builder()
-                .url(path)
-                .post(body)
-                .build();
-        Call call = client.newCall(request);
-
-        call.enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                Message message = Message.obtain();
-                message.what = 0;
-                message.obj = e.getMessage();
-            }
-
-            @Override
-            public void onResponse(Call call, okhttp3.Response response) throws IOException {
-                Message message = Message.obtain();
-                message.what = 1;
-                message.obj = response.body().string();
-
-                String objStr =  message.obj.toString();
-                JsonUtil jsonUtil = new JsonUtil();
-                SysDictInfo sysDictInfo = jsonUtil.json2Object(objStr, SysDictInfo.class);
-                sysDictInfo.getDictLists();
-            }
-        });
-    }
-
-
-    /**
-     * 得到教练员列表
-     * @return
-     */
-    public void findSysCoachList() {
-        //获取网络上的servlet路径
-        String path="http://120.79.137.103:10080/kidswim/att/hall/findAllCoach";
-        OkHttpClient client = new OkHttpClient();
-
-        okhttp3.Request request = new okhttp3.Request.Builder()
-                .url(path)
-                .build();
-        Call call = client.newCall(request);
-        call.enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                Message message = Message.obtain();
-                message.what = 0;
-                message.obj = e.getMessage();
-            }
-
-            @Override
-            public void onResponse(Call call, okhttp3.Response response) throws IOException {
-                Message message = Message.obtain();
-                message.what = 1;
-                message.obj = response.body().string();
-
-                String objStr =  message.obj.toString();
-                JsonUtil jsonUtil = new JsonUtil();
-                SysCoachListInfo sysCoachListInfo = jsonUtil.json2Object(objStr, SysCoachListInfo.class);
-            }
-        });
     }
 
 }

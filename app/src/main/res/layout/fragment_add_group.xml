@@ -75,6 +75,14 @@
             android:layout_weight="1"
             android:text="未选择"
             android:textAlignment="viewEnd" />
+
+        <TextView
+            android:id="@+id/address_choice_value_att"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textAlignment="viewEnd"
+            android:visibility="gone"/>
     </LinearLayout>
 
     <LinearLayout
@@ -101,6 +109,14 @@
             android:layout_weight="1"
             android:text="未选择"
             android:textAlignment="viewEnd" />
+
+        <TextView
+            android:id="@+id/begin_date_choice_value_att"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textAlignment="viewEnd"
+            android:visibility="gone"/>
     </LinearLayout>
 
     <LinearLayout
@@ -127,6 +143,14 @@
             android:layout_weight="1"
             android:text="未选择"
             android:textAlignment="viewEnd" />
+
+        <TextView
+            android:id="@+id/end_date_choice_value_att"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textAlignment="viewEnd"
+            android:visibility="gone"/>
     </LinearLayout>
 
     <LinearLayout
@@ -153,6 +177,14 @@
             android:layout_weight="1"
             android:text="未选择"
             android:textAlignment="viewEnd" />
+
+        <TextView
+            android:id="@+id/learn_begin_choice_value_att"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textAlignment="viewEnd"
+            android:visibility="gone"/>
     </LinearLayout>
 
     <LinearLayout
@@ -179,6 +211,14 @@
             android:layout_weight="1"
             android:text="未选择"
             android:textAlignment="viewEnd" />
+
+        <TextView
+            android:id="@+id/course_level_choice_value_att"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textAlignment="viewEnd"
+            android:visibility="gone"/>
     </LinearLayout>
 
     <Button
