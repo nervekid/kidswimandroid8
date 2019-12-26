@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -91,26 +92,20 @@ public class GalleryFragment extends Fragment {
         List<GroupInfo.GroupInfos> infos = groupInfo.getGroupList();
         ConstraintLayout conLayout = getActivity().findViewById(R.id.gallery_con_layout);
         LinearLayout layout = getActivity().findViewById(R.id.gallery_ver_layout);
-//        for (int i = 0; i < infos.size(); i++) {
-//            Button btn = new Button(getActivity());
-//            btn.setBackgroundColor(Color.parseColor("#009688"));
-//            btn.setTextColor(Color.parseColor("#FFFFFF"));
-//            btn.setText("分组编号" + infos.get(i).getCode());
-//            btn.setTop(i * 50);
-//            layout.addView(btn);
-//        }
-        Button btn1 = new Button(getActivity());
-        btn1.setBackgroundColor(Color.parseColor("#009688"));
-        btn1.setTextColor(Color.parseColor("#FFFFFF"));
-        btn1.setText("分组编号SDFSDFSDFSDF");
-       // btn1.setTop(i * 50);
-        layout.addView(btn1);
+        for (int i = 0; i < infos.size(); i++) {
 
-        Button btn2 = new Button(getActivity());
-        btn2.setBackgroundColor(Color.parseColor("#009688"));
-        btn2.setTextColor(Color.parseColor("#FFFFFF"));
-        btn2.setText("分组编号222222222222222");
-        //btn2.setTop(i * 50);
-        layout.addView(btn2);
+            Button btn = new Button(getActivity());
+
+            btn.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 100));
+            btn.setBackgroundColor(Color.parseColor("#009688"));
+            btn.setTextColor(Color.parseColor("#FFFFFF"));
+            btn.setText("分组编号" + infos.get(i).getCode());
+            ViewGroup.MarginLayoutParams margin = new ViewGroup.MarginLayoutParams(btn.getLayoutParams());
+            margin.setMargins(margin.leftMargin, 20, margin.rightMargin, margin.bottomMargin);
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(margin);
+            btn.setLayoutParams(layoutParams);
+            layout.addView(btn);
+
+        }
     }
 }

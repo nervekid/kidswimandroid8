@@ -1,5 +1,6 @@
 package com.kid.kidswim.ui.addgroup;
 
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -19,6 +20,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -38,7 +41,9 @@ import com.kid.kidswim.enums.KidswimAttEnum;
 import com.kid.kidswim.events.AddGroupAddressEvent;
 import com.kid.kidswim.events.AddGroupEvent;
 import com.kid.kidswim.events.AddGroupLevelEvent;
+import com.kid.kidswim.events.JumpToGalleryFragmentEvent;
 import com.kid.kidswim.result.AddGroupResult;
+import com.kid.kidswim.ui.gallery.GalleryFragment;
 import com.kid.kidswim.ui.gallery.GalleryViewModel;
 import com.kid.kidswim.utlis.JsonUtil;
 
@@ -161,14 +166,14 @@ public class AddGroupFragment extends Fragment {
                             if (addGroupResult.getStatus() != null && !addGroupResult.getStatus().equals("")) {
                                 if (addGroupResult.getStatus().equals("1")) {
                                     if (addGroupResult.getCode() != null && !addGroupResult.getCode().equals("")) {
-                                    Looper.prepare();
-                                    Toast.makeText(getActivity(), "创建分组成功! 分组编号为:" + addGroupResult.getCode(), Toast.LENGTH_SHORT).show();
-                                    Looper.loop();
-                                }
+                                        EventBus.getDefault().post(new JumpToGalleryFragmentEvent(addGroupResult.getCode()));
+                                    }
                                     else {
-                                    Looper.prepare();
-                                    Toast.makeText(getActivity(), "创建分组成功!", Toast.LENGTH_SHORT).show();
-                                    Looper.loop();
+                                        Looper.prepare();
+//                                        Toast.makeText(getActivity(), "创建分组成功!", Toast.LENGTH_SHORT).show();
+                                        NavController navController = Navigation.findNavController(getActivity(), R.id.nav_addgroup);
+                                        navController.navigate(R.id.nav_gallery);
+                                        Looper.loop();
                                 }
                             }
                                 else {
@@ -429,6 +434,18 @@ public class AddGroupFragment extends Fragment {
         }
         pvOptions.setPicker(nameList);
         pvOptions.show();
+    }
+
+    /**
+     * onEvent事件，跳转到分组列表分页
+     * @param event
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(JumpToGalleryFragmentEvent event) {
+
+        Toast.makeText(getActivity(), "创建分组成功! 分组编号为:" + event.getCode(), Toast.LENGTH_SHORT).show();
+        NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
+        navController.navigate(R.id.nav_gallery);
     }
 
 }
