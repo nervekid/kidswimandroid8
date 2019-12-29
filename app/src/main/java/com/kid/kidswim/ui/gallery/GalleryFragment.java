@@ -15,6 +15,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
 import com.bigkoo.pickerview.builder.TimePickerBuilder;
@@ -29,6 +31,7 @@ import com.kid.kidswim.command.SysDictInfo;
 import com.kid.kidswim.enums.KidswimAttEnum;
 import com.kid.kidswim.events.AddGroupAddressEvent;
 import com.kid.kidswim.events.GroupDetailsShowEvent;
+import com.kid.kidswim.events.JumpToAddGroupFragmentEvent;
 import com.kid.kidswim.utlis.JsonUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -221,6 +224,34 @@ public class GalleryFragment extends Fragment {
                 pvTime.show();
             }
         });
+
+        Button createGroupBtn = getActivity().findViewById(R.id.grllery_create_group_button);
+        createGroupBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final TextView grllery_address_choice_value_att_view = getActivity().findViewById(R.id.grllery_address_choice_value_att);
+                final TextView grllery_begin_date_choice_value_att_view = getActivity().findViewById(R.id.grllery_begin_date_choice_value_att);
+                final TextView grllery_lean_begin_choice_value_att_view = getActivity().findViewById(R.id.grllery_lean_begin_choice_value_att);
+                String addressStr = grllery_address_choice_value_att_view.getText().toString().trim();
+                String groupBeginDateStr = grllery_begin_date_choice_value_att_view.getText().toString().trim();
+                String learnBeginTimeStr = grllery_lean_begin_choice_value_att_view.getText().toString().trim();
+                EventBus.getDefault().post(new JumpToAddGroupFragmentEvent(addressStr, groupBeginDateStr, learnBeginTimeStr));
+            }
+        });
+    }
+
+    /**
+     * onEvent事件，跳转到增加分组的页面
+     * @param event
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(JumpToAddGroupFragmentEvent event) {
+        NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
+        Bundle bundle = new Bundle();
+        bundle.putString("addressStr", event.getAddressStr());
+        bundle.putString("groupBeginDateStr", event.getGroupBeginDateStr());
+        bundle.putString("learnBeginTimeStr", event.getLearnBeginTimeStr());
+        navController.navigate(R.id.nav_addgroup, bundle);
     }
 
     /**

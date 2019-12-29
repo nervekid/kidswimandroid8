@@ -22,13 +22,17 @@
     <string name="str_group_choice_group_begin_date">分组开始日期</string>
     <string name="str_group_choice_group_end_daye">分组结束日期</string>
     <string name="str_group_choice_learn_begin_time">上课开始时间</string>
-    <string name="str_group_choice_course_level">课程级别</string>
+    <string name="str_group_choice_course_level">选择课程级别</string>
 
     <string name="str_gallery_join_group">加入分组</string>
     <string name="str_gallery_create_group">创建新组</string>
     <string name="str_gallery_unjoin_sale_num">未分组人数</string>
     <string name="str_gallery_created_group_code">已建分组</string>
 
+    <string name="str_add_group_unjoin_group_student">未加入分组学员</string>
+    <string name="str_add_group_choiced_student">已选择学员</string>
+
     <string name="query_button">查询</string>
+    <string name="confirm_button">确认</string>
 
 </resources>
