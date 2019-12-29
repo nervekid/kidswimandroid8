@@ -12,5 +12,20 @@
             <solid android:color="#ffffff" />
         </shape>
     </item>
+    <item android:left="1dp">
+        <shape>
+            <solid android:color="#ffffff" />
+        </shape>
+    </item>
+    <item android:right="1dp">
+        <shape>
+            <solid android:color="#ffffff" />
+        </shape>
+    </item>
+    <item android:top="1dp">
+        <shape>
+            <solid android:color="#ffffff" />
+        </shape>
+    </item>
 </layer-list>
 
