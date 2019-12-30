@@ -26,7 +26,7 @@
 
         <TextView
             android:id="@+id/add_group_coath_choice_value"
-            android:layout_width="wrap_content"
+            android:layout_width="307dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="未选择"
@@ -59,7 +59,7 @@
 
         <TextView
             android:id="@+id/add_group_level_choice_value"
-            android:layout_width="261dp"
+            android:layout_width="307dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="未选择"
@@ -119,13 +119,11 @@
             android:layout_height="match_parent"
             android:layout_weight="1">
 
-            <LinearLayout
-                android:id="@+id/add_group_linearLayout4_show_layout"
+            <RadioGroup
+                android:id="@+id/add_group_radiogroup_layout_1"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/underline"
-                android:orientation="vertical">
-            </LinearLayout>
+                android:layout_height="wrap_content" >
+            </RadioGroup>
         </ScrollView>
     </LinearLayout>
 
@@ -180,16 +178,16 @@
         app:layout_constraintTop_toBottomOf="@+id/add_group_linearLayout5">
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/grllery_selected_sale_students_num"
             android:layout_width="90dp"
             android:layout_height="40dp"
             android:layout_weight="1"
-            android:text="已选择5人"
+            android:text="已选择0人"
             android:textAlignment="center"
             android:textSize="24sp" />
 
         <Button
-            android:id="@+id/grllery_create_group_button"
+            android:id="@+id/add_group_create_group_button"
             android:layout_width="90dp"
             android:layout_height="40dp"
             android:layout_marginLeft="5dp"

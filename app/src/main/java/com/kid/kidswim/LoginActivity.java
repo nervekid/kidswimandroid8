@@ -52,10 +52,8 @@ public class LoginActivity extends AppCompatActivity {
         String path="http://120.79.137.103:10080/kidswim/att/hall/login";
         OkHttpClient client = new OkHttpClient();
         RequestBody body = new FormBody.Builder()
-//                .add("userLoginName", name)
-//                .add("userPassword", pass)
-                .add("userLoginName", "15999947554")
-                .add("userPassword", "1")
+                .add("userLoginName", name)
+                .add("userPassword", pass)
                 .build();
         okhttp3.Request request = new okhttp3.Request.Builder()
                 .url(path)
