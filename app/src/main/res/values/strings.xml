@@ -7,6 +7,7 @@
     <string name="nav_header_desc">Navigation header</string>
 
     <string name="action_add_group">新建分组</string>
+    <string name="action_insert_group">加入分组</string>
     <string name="action_add_group_details">学员加入分组</string>
 
 

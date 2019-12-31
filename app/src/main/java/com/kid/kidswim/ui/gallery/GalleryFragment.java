@@ -71,7 +71,30 @@ public class GalleryFragment extends Fragment {
         insertGroupBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), "功能正在开发中！", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), "功能正在开发中！", Toast.LENGTH_SHORT).show();
+                final TextView grllery_address_choice_value_att_view = getActivity().findViewById(R.id.grllery_address_choice_value_att);
+                final TextView grllery_begin_date_choice_value_att_view = getActivity().findViewById(R.id.grllery_begin_date_choice_value_att);
+                final TextView grllery_lean_begin_choice_value_att_view = getActivity().findViewById(R.id.grllery_lean_begin_choice_value_att);
+                String addressStr = grllery_address_choice_value_att_view.getText().toString().trim();
+                String groupBeginDateStr = grllery_begin_date_choice_value_att_view.getText().toString().trim();
+                String learnBeginTimeStr = grllery_lean_begin_choice_value_att_view.getText().toString().trim();
+                if(addressStr == null || addressStr.equals("")) {
+                    Toast.makeText(getActivity(), "请选择泳池！", Toast.LENGTH_SHORT).show();
+                }
+                else if(groupBeginDateStr == null || groupBeginDateStr.equals("")) {
+                Toast.makeText(getActivity(), "请选择分组开始日期！", Toast.LENGTH_SHORT).show();
+                }
+                else if(learnBeginTimeStr == null || learnBeginTimeStr.equals("")) {
+                Toast.makeText(getActivity(), "请选择上课开始时间！", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("addressStr", addressStr);
+                    bundle.putString("groupBeginDateStr", groupBeginDateStr);
+                    bundle.putString("learnBeginTimeStr", learnBeginTimeStr);
+                    navController.navigate(R.id.nav_insertgroup, bundle);
+                }
             }
         });
 
@@ -125,19 +148,19 @@ public class GalleryFragment extends Fragment {
                             String objStr =  message.obj.toString();
                             JsonUtil jsonUtil = new JsonUtil();
                             GroupDetailsSituationInfo groupDetailsSituationInfo = jsonUtil.json2Object(objStr, GroupDetailsSituationInfo.class);
-                            if (groupDetailsSituationInfo.getSituationInfo().getGroupList().isEmpty() && groupDetailsSituationInfo.getSituationInfo().getCodes().isEmpty()) {
+                            if (groupDetailsSituationInfo.getSituationInfo().getGroupList().isEmpty() && groupDetailsSituationInfo.getSituationInfo().getGroupDetailsInfos().isEmpty()) {
                                 Looper.prepare();
                                 Toast.makeText(getActivity(), "查询成功，未分组学员数为0，已建分组为0！", Toast.LENGTH_SHORT).show();
                                 EventBus.getDefault().post(new GroupDetailsShowEvent(groupDetailsSituationInfo));
                                 Looper.loop();
                             }
-                            else if (!groupDetailsSituationInfo.getSituationInfo().getGroupList().isEmpty() && groupDetailsSituationInfo.getSituationInfo().getCodes().isEmpty()){
+                            else if (!groupDetailsSituationInfo.getSituationInfo().getGroupList().isEmpty() && groupDetailsSituationInfo.getSituationInfo().getGroupDetailsInfos().isEmpty()){
                                 Looper.prepare();
                                 Toast.makeText(getActivity(), "查询成功，已建分组为0！", Toast.LENGTH_SHORT).show();
                                 EventBus.getDefault().post(new GroupDetailsShowEvent(groupDetailsSituationInfo));
                                 Looper.loop();
                             }
-                            else if (groupDetailsSituationInfo.getSituationInfo().getGroupList().isEmpty() && !groupDetailsSituationInfo.getSituationInfo().getCodes().isEmpty()){
+                            else if (groupDetailsSituationInfo.getSituationInfo().getGroupList().isEmpty() && !groupDetailsSituationInfo.getSituationInfo().getGroupDetailsInfos().isEmpty()){
                                 Looper.prepare();
                                 Toast.makeText(getActivity(), "查询成功，未分组学员数为0，！", Toast.LENGTH_SHORT).show();
                                 EventBus.getDefault().post(new GroupDetailsShowEvent(groupDetailsSituationInfo));
@@ -315,12 +338,13 @@ public class GalleryFragment extends Fragment {
             grllery_linearLayout4_show_layout_view.addView(btn);
         }
 
-        for (int i = 0; i < info.getSituationInfo().getCodes().size(); i++) {
+        for (int i = 0; i < info.getSituationInfo().getGroupDetailsInfos().size(); i++) {
             Button btn = new Button(getActivity());
             btn.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 100));
             btn.setBackgroundColor(Color.parseColor("#79FF79"));
             btn.setTextColor(Color.parseColor("#000000"));
-            btn.setText(info.getSituationInfo().getCodes().get(i));
+            btn.setText(info.getSituationInfo().getGroupDetailsInfos().get(i).getCodeAndNumShow());
+            btn.setId(i);
             ViewGroup.MarginLayoutParams margin = new ViewGroup.MarginLayoutParams(btn.getLayoutParams());
             margin.setMargins(margin.leftMargin, 10, margin.rightMargin, margin.bottomMargin);
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(margin);
