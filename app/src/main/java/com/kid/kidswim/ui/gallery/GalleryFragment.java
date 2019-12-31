@@ -79,31 +79,32 @@ public class GalleryFragment extends Fragment {
         queryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 final TextView grllery_address_choice_value_att_view = getActivity().findViewById(R.id.grllery_address_choice_value_att);
                 final TextView grllery_begin_date_choice_value_att_view = getActivity().findViewById(R.id.grllery_begin_date_choice_value_att);
                 final TextView grllery_lean_begin_choice_value_att_view = getActivity().findViewById(R.id.grllery_lean_begin_choice_value_att);
                 String addressStr = grllery_address_choice_value_att_view.getText().toString().trim();
                 String groupBeginDateStr = grllery_begin_date_choice_value_att_view.getText().toString().trim();
                 String learnBeginTimeStr = grllery_lean_begin_choice_value_att_view.getText().toString().trim();
-                if(addressStr == null || addressStr.equals("")) {
-                    Toast.makeText(getActivity(), "请选择泳池！", Toast.LENGTH_SHORT).show();
-                }
-                else if(groupBeginDateStr == null || groupBeginDateStr.equals("")) {
-                        Toast.makeText(getActivity(), "请选择分组开始日期！", Toast.LENGTH_SHORT).show();
-                    }
-                    else if(learnBeginTimeStr == null || learnBeginTimeStr.equals("")) {
-                        Toast.makeText(getActivity(), "请选择上课开始时间！", Toast.LENGTH_SHORT).show();
-                    }
-                    else {
+//                if(addressStr == null || addressStr.equals("")) {
+//                    Toast.makeText(getActivity(), "请选择泳池！", Toast.LENGTH_SHORT).show();
+//                }
+//                else if(groupBeginDateStr == null || groupBeginDateStr.equals("")) {
+//                        Toast.makeText(getActivity(), "请选择分组开始日期！", Toast.LENGTH_SHORT).show();
+//                    }
+//                    else if(learnBeginTimeStr == null || learnBeginTimeStr.equals("")) {
+//                        Toast.makeText(getActivity(), "请选择上课开始时间！", Toast.LENGTH_SHORT).show();
+//                    }
+//                    else {
                     //获取网络上的servlet路径
                     String path="http://120.79.137.103:10080/kidswim/att/group/findCourseCorrespondSaleSituation";
                     OkHttpClient client = new OkHttpClient();
                     RequestBody body = new FormBody.Builder()
-                            .add("courseAddress", addressStr)
-                            .add("learnBeginTime", learnBeginTimeStr)
-                            .add("beginDateStr", groupBeginDateStr)
+//                            .add("courseAddress", addressStr)
+//                            .add("learnBeginTime", learnBeginTimeStr)
+//                            .add("beginDateStr", groupBeginDateStr)
+                            .add("courseAddress", "HH")
+                            .add("learnBeginTime", "1400")
+                            .add("beginDateStr", "2020-02-01")
                             .build();
                     okhttp3.Request request = new okhttp3.Request.Builder()
                             .url(path)
@@ -152,7 +153,7 @@ public class GalleryFragment extends Fragment {
                     });
 
                 }
-            }
+//            }
         });
 
 
