@@ -216,16 +216,6 @@
         app:layout_constraintTop_toBottomOf="@+id/grllery_linearLayout5">
 
         <Button
-            android:id="@+id/grllery_join_group_button"
-            android:layout_width="90dp"
-            android:layout_height="40dp"
-            android:layout_weight="1"
-            android:background="@color/colorPrimary"
-            android:text="@string/str_gallery_join_group"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp" />
-
-        <Button
             android:id="@+id/grllery_create_group_button"
             android:layout_width="90dp"
             android:layout_height="40dp"

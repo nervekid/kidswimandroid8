@@ -21,11 +21,17 @@ public class GroupDetailsSituationInfo {
             @JsonProperty("code")
             private String code;
 
+            @JsonProperty("coachName")
+            private String coachName;
+
             @JsonProperty("codeAndNumShow")
             private String codeAndNumShow;
 
             @JsonProperty("courseAddress")
             private String courseAddress;
+
+            @JsonProperty("courseAddressName")
+            private String courseAddressName;
 
             @JsonProperty("groupBeginTime")
             private String groupBeginTime;
@@ -35,6 +41,9 @@ public class GroupDetailsSituationInfo {
 
             @JsonProperty("groupLearnBeginTime")
             private String groupLearnBeginTime;
+
+            @JsonProperty("groupLearnBeginTimeStr")
+            private String groupLearnBeginTimeStr;
 
             public String getCode() {
                 return code;
@@ -82,6 +91,30 @@ public class GroupDetailsSituationInfo {
 
             public void setGroupLearnBeginTime(String groupLearnBeginTime) {
                 this.groupLearnBeginTime = groupLearnBeginTime;
+            }
+
+            public String getCoachName() {
+                return coachName;
+            }
+
+            public void setCoachName(String coachName) {
+                this.coachName = coachName;
+            }
+
+            public String getCourseAddressName() {
+                return courseAddressName;
+            }
+
+            public void setCourseAddressName(String courseAddressName) {
+                this.courseAddressName = courseAddressName;
+            }
+
+            public String getGroupLearnBeginTimeStr() {
+                return groupLearnBeginTimeStr;
+            }
+
+            public void setGroupLearnBeginTimeStr(String groupLearnBeginTimeStr) {
+                this.groupLearnBeginTimeStr = groupLearnBeginTimeStr;
             }
         }
 
