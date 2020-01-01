@@ -33,6 +33,13 @@
     <string name="str_add_group_unjoin_group_student">未加入分组学员</string>
     <string name="str_add_group_choiced_student">已选择学员</string>
 
+    <string name="str_insert_group_code">分组编号</string>
+    <string name="str_insert_group_coach">分组教练</string>
+    <string name="str_insert_group_address">分组泳池</string>
+    <string name="str_insert_group_begin_date">开始日期</string>
+    <string name="str_insert_group_learn_time">上课开始时间</string>
+    <string name="str_insert_group_level">课程级别</string>
+
     <string name="query_button">查询</string>
     <string name="confirm_button">确认</string>
 
