@@ -1,5 +1,7 @@
 package com.kid.kidswim.ui.gallery;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Looper;
@@ -37,6 +39,7 @@ import com.kid.kidswim.utlis.JsonUtil;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -66,6 +69,36 @@ public class GalleryFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("loginUserToken", Context.MODE_PRIVATE);
+
+        if ((sharedPreferences.getString("courseAddressValue", "") != null && !sharedPreferences.getString("courseAddressValue", "").equals("")) &&
+                (sharedPreferences.getString("groupBeginTimeStrValue", "") != null && !sharedPreferences.getString("groupBeginTimeStrValue", "").equals("")) &&
+                (sharedPreferences.getString("groupLearnBeginTimeValue", "") != null && !sharedPreferences.getString("groupLearnBeginTimeValue", "").equals("")) &&
+                (sharedPreferences.getString("courseAddressName", "") != null && !sharedPreferences.getString("courseAddressName", "").equals("")) &&
+                (sharedPreferences.getString("groupLearnBeginTimeStrValue", "") != null && !sharedPreferences.getString("groupLearnBeginTimeStrValue", "").equals(""))) {
+
+            final String courseAddressValue = sharedPreferences.getString("courseAddressValue", "");
+            final String groupBeginTimeStrValue = sharedPreferences.getString("groupBeginTimeStrValue", "");
+            final String groupLearnBeginTimeValue = sharedPreferences.getString("groupLearnBeginTimeValue", "");
+            final String courseAddressNameValue = sharedPreferences.getString("courseAddressName", "");
+            final String groupLearnBeginTimeStrValue = sharedPreferences.getString("groupLearnBeginTimeStrValue", "");
+            TextView grllery_address_choice_value_view = getActivity().findViewById(R.id.grllery_address_choice_value);
+            grllery_address_choice_value_view.setText(courseAddressNameValue);
+            TextView grllery_address_choice_value_att_view = getActivity().findViewById(R.id.grllery_address_choice_value_att);
+            grllery_address_choice_value_att_view.setText(courseAddressValue);
+            TextView grllery_begin_date_choice_value_view = getActivity().findViewById(R.id.grllery_begin_date_choice_value);
+            grllery_begin_date_choice_value_view.setText(groupBeginTimeStrValue);
+            TextView grllery_begin_date_choice_value_att_view = getActivity().findViewById(R.id.grllery_begin_date_choice_value_att);
+            grllery_begin_date_choice_value_att_view.setText(groupBeginTimeStrValue);
+            TextView grllery_lean_begin_choice_value_view = getActivity().findViewById(R.id.grllery_lean_begin_choice_value);
+            grllery_lean_begin_choice_value_view.setText(groupLearnBeginTimeStrValue);
+            TextView grllery_lean_begin_choice_value_att_view = getActivity().findViewById(R.id.grllery_lean_begin_choice_value_att);
+            grllery_lean_begin_choice_value_att_view.setText(groupLearnBeginTimeValue);
+            final Button queryBtn = getActivity().findViewById(R.id.gallery_query_button18);
+        }
+
+
         final Button queryBtn = getActivity().findViewById(R.id.gallery_query_button18);
         queryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,26 +109,23 @@ public class GalleryFragment extends Fragment {
                 String addressStr = grllery_address_choice_value_att_view.getText().toString().trim();
                 String groupBeginDateStr = grllery_begin_date_choice_value_att_view.getText().toString().trim();
                 String learnBeginTimeStr = grllery_lean_begin_choice_value_att_view.getText().toString().trim();
-//                if(addressStr == null || addressStr.equals("")) {
-//                    Toast.makeText(getActivity(), "请选择泳池！", Toast.LENGTH_SHORT).show();
-//                }
-//                else if(groupBeginDateStr == null || groupBeginDateStr.equals("")) {
-//                        Toast.makeText(getActivity(), "请选择分组开始日期！", Toast.LENGTH_SHORT).show();
-//                    }
-//                    else if(learnBeginTimeStr == null || learnBeginTimeStr.equals("")) {
-//                        Toast.makeText(getActivity(), "请选择上课开始时间！", Toast.LENGTH_SHORT).show();
-//                    }
-//                    else {
+                if(addressStr == null || addressStr.equals("")) {
+                    Toast.makeText(getActivity(), "请选择泳池！", Toast.LENGTH_SHORT).show();
+                }
+                else if(groupBeginDateStr == null || groupBeginDateStr.equals("")) {
+                        Toast.makeText(getActivity(), "请选择分组开始日期！", Toast.LENGTH_SHORT).show();
+                    }
+                    else if(learnBeginTimeStr == null || learnBeginTimeStr.equals("")) {
+                        Toast.makeText(getActivity(), "请选择上课开始时间！", Toast.LENGTH_SHORT).show();
+                    }
+                    else {
                     //获取网络上的servlet路径
                     String path="http://120.79.137.103:10080/kidswim/att/group/findCourseCorrespondSaleSituation";
                     OkHttpClient client = new OkHttpClient();
                     RequestBody body = new FormBody.Builder()
-//                            .add("courseAddress", addressStr)
-//                            .add("learnBeginTime", learnBeginTimeStr)
-//                            .add("beginDateStr", groupBeginDateStr)
-                            .add("courseAddress", "HH")
-                            .add("learnBeginTime", "1400")
-                            .add("beginDateStr", "2020-02-01")
+                            .add("courseAddress", addressStr)
+                            .add("learnBeginTime", learnBeginTimeStr)
+                            .add("beginDateStr", groupBeginDateStr)
                             .build();
                     okhttp3.Request request = new okhttp3.Request.Builder()
                             .url(path)
@@ -144,7 +174,7 @@ public class GalleryFragment extends Fragment {
                     });
 
                 }
-//            }
+            }
         });
 
 
@@ -231,10 +261,14 @@ public class GalleryFragment extends Fragment {
                 final TextView grllery_address_choice_value_att_view = getActivity().findViewById(R.id.grllery_address_choice_value_att);
                 final TextView grllery_begin_date_choice_value_att_view = getActivity().findViewById(R.id.grllery_begin_date_choice_value_att);
                 final TextView grllery_lean_begin_choice_value_att_view = getActivity().findViewById(R.id.grllery_lean_begin_choice_value_att);
+                final TextView grllery_address_choice_value_view = getActivity().findViewById(R.id.grllery_address_choice_value);
+                final TextView grllery_lean_begin_choice_value_view = getActivity().findViewById(R.id.grllery_lean_begin_choice_value);
                 String addressStr = grllery_address_choice_value_att_view.getText().toString().trim();
                 String groupBeginDateStr = grllery_begin_date_choice_value_att_view.getText().toString().trim();
                 String learnBeginTimeStr = grllery_lean_begin_choice_value_att_view.getText().toString().trim();
-                EventBus.getDefault().post(new JumpToAddGroupFragmentEvent(addressStr, groupBeginDateStr, learnBeginTimeStr));
+                String addressName = grllery_address_choice_value_view.getText().toString().trim();
+                String learnBeginTimeStrShow = grllery_lean_begin_choice_value_view.getText().toString().trim();
+                EventBus.getDefault().post(new JumpToAddGroupFragmentEvent(addressStr, groupBeginDateStr, learnBeginTimeStr, addressName, learnBeginTimeStrShow));
             }
         });
     }
@@ -250,6 +284,8 @@ public class GalleryFragment extends Fragment {
         bundle.putString("addressStr", event.getAddressStr());
         bundle.putString("groupBeginDateStr", event.getGroupBeginDateStr());
         bundle.putString("learnBeginTimeStr", event.getLearnBeginTimeStr());
+        bundle.putString("addressName", event.getAddressName());
+        bundle.putString("learnBeginTimeStrShow", event.getLearnBeginTimeStrShow());
         navController.navigate(R.id.nav_addgroup, bundle);
     }
 

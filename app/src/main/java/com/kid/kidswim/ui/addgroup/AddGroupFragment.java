@@ -94,11 +94,21 @@ public class AddGroupFragment extends Fragment {
 
         //在此尝试获取SharedPreferences对象信息
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("loginUserToken", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
         final String userId = sharedPreferences.getString("loginId", "");
 
         final String addressStr = (String) getArguments().get("addressStr");
         final String groupBeginDateStr = (String) getArguments().get("groupBeginDateStr");
         final String learnBeginTimeStr = (String) getArguments().get("learnBeginTimeStr");
+        final String addressName = (String) getArguments().get("addressName");
+        final String learnBeginTimeStrShow = (String) getArguments().get("learnBeginTimeStrShow");
+
+        editor.putString("courseAddressValue", addressStr);
+        editor.putString("groupBeginTimeStrValue", groupBeginDateStr);
+        editor.putString("groupLearnBeginTimeValue", learnBeginTimeStr);
+        editor.putString("courseAddressName", addressName);
+        editor.putString("groupLearnBeginTimeStrValue", learnBeginTimeStrShow);
+        editor.commit();
 
         Button createBtn = getActivity().findViewById(R.id.add_group_create_group_button);
         createBtn.setOnClickListener(new View.OnClickListener() {

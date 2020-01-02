@@ -7,10 +7,16 @@ public class JumpToAddGroupFragmentEvent {
 
     private String learnBeginTimeStr;
 
-    public JumpToAddGroupFragmentEvent(String addressStr, String groupBeginDateStr, String learnBeginTimeStr) {
+    private String addressName;
+
+    private String learnBeginTimeStrShow;
+
+    public JumpToAddGroupFragmentEvent(String addressStr, String groupBeginDateStr, String learnBeginTimeStr, String addressName, String learnBeginTimeStrShow) {
         this.addressStr = addressStr;
         this.groupBeginDateStr = groupBeginDateStr;
         this.learnBeginTimeStr = learnBeginTimeStr;
+        this.addressName = addressName;
+        this.learnBeginTimeStrShow = learnBeginTimeStrShow;
     }
 
     public String getAddressStr() {
@@ -35,5 +41,21 @@ public class JumpToAddGroupFragmentEvent {
 
     public void setLearnBeginTimeStr(String learnBeginTimeStr) {
         this.learnBeginTimeStr = learnBeginTimeStr;
+    }
+
+    public String getAddressName() {
+        return addressName;
+    }
+
+    public void setAddressName(String addressName) {
+        this.addressName = addressName;
+    }
+
+    public String getLearnBeginTimeStrShow() {
+        return learnBeginTimeStrShow;
+    }
+
+    public void setLearnBeginTimeStrShow(String learnBeginTimeStrShow) {
+        this.learnBeginTimeStrShow = learnBeginTimeStrShow;
     }
 }
