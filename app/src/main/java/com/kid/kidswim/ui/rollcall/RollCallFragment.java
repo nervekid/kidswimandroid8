@@ -22,6 +22,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
 import com.bigkoo.pickerview.builder.TimePickerBuilder;
@@ -92,6 +93,20 @@ public class RollCallFragment extends Fragment {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         final String userId = sharedPreferences.getString("loginId", "");
 
+        if ((sharedPreferences.getString("rollcallAddress", "") != null
+                && !sharedPreferences.getString("rollcallAddress", "").equals("")) &&
+                sharedPreferences.getString("rollcallBeginDate", "") != null
+                && !sharedPreferences.getString("rollcallBeginDate", "").equals("") &&
+                sharedPreferences.getString("rollcallBeginTime", "") != null
+                && !sharedPreferences.getString("rollcallBeginTime", "").equals("") &&
+                sharedPreferences.getString("rollcallEndTime", "") != null
+                && !sharedPreferences.getString("rollcallEndTime", "").equals("")) {
+            String rollcallAddress = sharedPreferences.getString("rollcallAddress", "");
+            String rollcallBeginDate = sharedPreferences.getString("rollcallBeginDate", "");
+            String rollcallBeginTime = sharedPreferences.getString("rollcallBeginTime", "");
+            String rollcallEndTime = sharedPreferences.getString("rollcallEndTime", "");
+        }
+
         final Button confimBtn = getActivity().findViewById(R.id.roll_call_confirm_button);
         confimBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,49 +115,22 @@ public class RollCallFragment extends Fragment {
                     Toast.makeText(getActivity(), "请至少对一名学员进行点名！", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    List<RollCallCommand> cList = new ArrayList<RollCallCommand>();
+                    JSONArray jsonArray = new JSONArray();
                     for (Map.Entry<String, RollCallCommand> c : checkIdandNameMap.entrySet()) {
-                        cList.add(c.getValue());
+                        JSONObject jsonObject = new JSONObject();
+                        jsonObject.put("courseDetailsId", c.getValue().getCourseDetailsId());
+                        jsonObject.put("studentId", c.getValue().getStudentId());
+                        jsonObject.put("rollCallStatusFlag", c.getValue().getStatus());
+                        jsonArray.add(jsonObject);
                     }
-                    StringBuffer strBuff = new StringBuffer();
-                    strBuff.append("[");
-                    for (int i = 0; i < cList.size(); i++) {
-                        //最后一个
-                        if (i == cList.size() - 1) {
-                            strBuff.append("{");
-                            strBuff.append("\"courseDetailsId\":\"");
-                            strBuff.append(cList.get(i).getCourseDetailsId());
-                            strBuff.append("\",");
-                            strBuff.append("\"studentId\":\"");
-                            strBuff.append(cList.get(i).getStudentId());
-                            strBuff.append("\",");
-                            strBuff.append("\"rollCallStatusFlag\":\"");
-                            strBuff.append(cList.get(i).getStatus());
-                            strBuff.append("\"");
-                            strBuff.append("}");
-                        }
-                        else {
-                            strBuff.append("{");
-                            strBuff.append("\"courseDetailsId\":\"");
-                            strBuff.append(cList.get(i).getCourseDetailsId());
-                            strBuff.append("\",");
-                            strBuff.append("\"studentId\":\"");
-                            strBuff.append(cList.get(i).getStudentId());
-                            strBuff.append("\",");
-                            strBuff.append("\"rollCallStatusFlag\":\"");
-                            strBuff.append(cList.get(i).getStatus());
-                            strBuff.append("\"");
-                            strBuff.append("},");
-                        }
-                    }
-
                     //获取网络上的servlet路径
                     String path="http://120.79.137.103:10080/kidswim/att/rollcall/rollCall";
                     OkHttpClient client = new OkHttpClient();
                     JSONObject jsonObject = new JSONObject();
+
                     try {
                         jsonObject.put("userId", userId);
-                        jsonObject.put("rollCallCommandList", strBuff.toString());
+                        jsonObject.put("rollCallCommandList", jsonArray);
                     }
                     catch (Exception e) {
                         e.printStackTrace();
@@ -493,5 +481,11 @@ public class RollCallFragment extends Fragment {
     public void onEvent(JumpToHomeFragmentEvent event) {
         NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
         navController.navigate(R.id.nav_home);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        EventBus.getDefault().unregister(this);
     }
 }
