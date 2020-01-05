@@ -35,7 +35,8 @@ public class KidswimAttEnum {
         課程對應級別("course_level"),
         點名狀態("rollCall_status_flag"),
         性別("sex_flag"),
-        證書類別("certificate_categor");
+        證書類別("certificate_categor"),
+        點名類別("roll_call_status_flag");
         private String name;
 
         private kidswimFlag(String name) {

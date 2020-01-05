@@ -98,7 +98,6 @@ public class GalleryFragment extends Fragment {
             final Button queryBtn = getActivity().findViewById(R.id.gallery_query_button18);
         }
 
-
         final Button queryBtn = getActivity().findViewById(R.id.gallery_query_button18);
         queryBtn.setOnClickListener(new View.OnClickListener() {
             @Override

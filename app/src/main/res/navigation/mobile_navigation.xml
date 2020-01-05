@@ -59,4 +59,10 @@
         android:label="@string/action_add_group_details"
         tools:layout="@layout/fragment_add_group_details" />
 
+    <fragment
+        android:id="@+id/nav_rollcall"
+        android:name="com.kid.kidswim.ui.rollcall.RollCallFragment"
+        android:label="@string/action_rollcall"
+        tools:layout="@layout/fragment_roll_call" />
+
 </navigation>
