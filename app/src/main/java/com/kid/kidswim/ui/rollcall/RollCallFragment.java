@@ -33,6 +33,7 @@ import com.bigkoo.pickerview.view.TimePickerView;
 import com.kid.kidswim.R;
 import com.kid.kidswim.command.GroupDetailsSituationInfo;
 import com.kid.kidswim.command.IdAndName;
+import com.kid.kidswim.command.RollBeginTimeShow;
 import com.kid.kidswim.command.RollCallCommand;
 import com.kid.kidswim.command.RollCallShowSaleInfo;
 import com.kid.kidswim.command.SysDictInfo;
@@ -47,6 +48,7 @@ import com.kid.kidswim.events.JumpToHomeFragmentEvent;
 import com.kid.kidswim.events.RollCallAddressEvent;
 import com.kid.kidswim.events.RollCallShowEvent;
 import com.kid.kidswim.events.RollCallStatusEvent;
+import com.kid.kidswim.events.RollShowBeginTimeEvent;
 import com.kid.kidswim.result.AddGroupResult;
 import com.kid.kidswim.result.RollCallResult;
 import com.kid.kidswim.ui.insertgroup.InsertGroupViewModel;
@@ -93,18 +95,48 @@ public class RollCallFragment extends Fragment {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         final String userId = sharedPreferences.getString("loginId", "");
 
-        if ((sharedPreferences.getString("rollcallAddress", "") != null
-                && !sharedPreferences.getString("rollcallAddress", "").equals("")) &&
-                sharedPreferences.getString("rollcallBeginDate", "") != null
-                && !sharedPreferences.getString("rollcallBeginDate", "").equals("") &&
-                sharedPreferences.getString("rollcallBeginTime", "") != null
-                && !sharedPreferences.getString("rollcallBeginTime", "").equals("") &&
-                sharedPreferences.getString("rollcallEndTime", "") != null
-                && !sharedPreferences.getString("rollcallEndTime", "").equals("")) {
-            String rollcallAddress = sharedPreferences.getString("rollcallAddress", "");
-            String rollcallBeginDate = sharedPreferences.getString("rollcallBeginDate", "");
-            String rollcallBeginTime = sharedPreferences.getString("rollcallBeginTime", "");
-            String rollcallEndTime = sharedPreferences.getString("rollcallEndTime", "");
+        if ((sharedPreferences.getString("rollCallAddressValue", "") != null
+                && !sharedPreferences.getString("rollCallAddressValue", "").equals("")) &&
+
+                sharedPreferences.getString("rollCallAddressName", "") != null
+                && !sharedPreferences.getString("rollCallAddressName", "").equals("") &&
+
+                sharedPreferences.getString("rollCallBeginTtimeValue", "") != null
+                && !sharedPreferences.getString("rollCallBeginTtimeValue", "").equals("") &&
+
+                sharedPreferences.getString("rollCallBeginTtimeName", "") != null
+                && !sharedPreferences.getString("rollCallBeginTtimeName", "").equals("") &&
+
+                sharedPreferences.getString("rollCallDateValue", "") != null
+                && !sharedPreferences.getString("rollCallDateValue", "").equals("") &&
+
+                sharedPreferences.getString("rollCallDateName", "") != null
+                && !sharedPreferences.getString("rollCallDateName", "").equals("")
+        ) {
+            String rollCallAddressValue = sharedPreferences.getString("rollCallAddressValue", "");
+            String rollCallAddressName = sharedPreferences.getString("rollCallAddressName", "");
+            String rollCallBeginTtimeValue = sharedPreferences.getString("rollCallBeginTtimeValue", "");
+            String rollCallBeginTtimeName = sharedPreferences.getString("rollCallBeginTtimeName", "");
+            String rollCallDateValue = sharedPreferences.getString("rollCallDateValue", "");
+            String rollCallDateName = sharedPreferences.getString("rollCallDateName", "");
+
+            TextView roll_call_address_choice_value_view = getActivity().findViewById(R.id.roll_call_address_choice_value);
+            roll_call_address_choice_value_view.setText(rollCallAddressName);
+
+            TextView roll_call_address_choice_value_att_view = getActivity().findViewById(R.id.roll_call_address_choice_value_att);
+            roll_call_address_choice_value_att_view.setText(rollCallAddressValue);
+
+            TextView roll_call_begin_date_choice_value_view = getActivity().findViewById(R.id.roll_call_begin_date_choice_value);
+            roll_call_begin_date_choice_value_view.setText(rollCallDateName);
+
+            TextView roll_call_begin_date_choice_value_att_view = getActivity().findViewById(R.id.roll_call_begin_date_choice_value_att);
+            roll_call_begin_date_choice_value_att_view.setText(rollCallDateValue);
+
+            TextView roll_call_begin_time_choice_value_view = getActivity().findViewById(R.id.roll_call_begin_time_choice_value);
+            roll_call_begin_time_choice_value_view.setText(rollCallBeginTtimeName);
+
+            TextView roll_call_begin_time_choice_value_att_view = getActivity().findViewById(R.id.roll_call_begin_time_choice_value_att);
+            roll_call_begin_time_choice_value_att_view.setText(rollCallBeginTtimeValue);
         }
 
         final Button confimBtn = getActivity().findViewById(R.id.roll_call_confirm_button);
@@ -186,11 +218,9 @@ public class RollCallFragment extends Fragment {
                 final TextView roll_call_address_choice_value_att_view = getActivity().findViewById(R.id.roll_call_address_choice_value_att);
                 final TextView roll_call_begin_date_choice_value_att_view = getActivity().findViewById(R.id.roll_call_begin_date_choice_value_att);
                 final TextView roll_call_begin_time_choice_value_att_view = getActivity().findViewById(R.id.roll_call_begin_time_choice_value_att);
-                final TextView roll_call_end_time_choice_value_att_view = getActivity().findViewById(R.id.roll_call_end_time_choice_value_att);
                 String addressStr = roll_call_address_choice_value_att_view.getText().toString().trim();
                 String beginDateStr = roll_call_begin_date_choice_value_att_view.getText().toString().trim();
                 String beginTimeStr = roll_call_begin_time_choice_value_att_view.getText().toString().trim();
-                String endTimeStr = roll_call_end_time_choice_value_att_view.getText().toString().trim();
                 if(addressStr == null || addressStr.equals("")) {
                     Toast.makeText(getActivity(), "请选择泳池！", Toast.LENGTH_SHORT).show();
                 }
@@ -200,9 +230,6 @@ public class RollCallFragment extends Fragment {
                 else if(beginTimeStr == null || beginTimeStr.equals("")) {
                     Toast.makeText(getActivity(), "请选择上课开始时间！", Toast.LENGTH_SHORT).show();
                 }
-                else if(endTimeStr == null || endTimeStr.equals("")) {
-                    Toast.makeText(getActivity(), "请选择上课结束时间！", Toast.LENGTH_SHORT).show();
-                }
                 else {
                     //获取网络上的servlet路径
                     String path="http://120.79.137.103:10080/kidswim/att/rollcall/findRollCallSaleStudentList";
@@ -211,7 +238,6 @@ public class RollCallFragment extends Fragment {
                             .add("courseAddress", addressStr)
                             .add("dateStr", beginDateStr)
                             .add("beginTimeStr", beginTimeStr)
-                            .add("endTimeStr", endTimeStr)
                             .build();
                     okhttp3.Request request = new okhttp3.Request.Builder()
                             .url(path)
@@ -232,7 +258,7 @@ public class RollCallFragment extends Fragment {
                             String objStr =  message.obj.toString();
                             JsonUtil jsonUtil = new JsonUtil();
                             RollCallShowSaleInfo rollCallShowSaleInfo = jsonUtil.json2Object(objStr, RollCallShowSaleInfo.class);
-                            if (rollCallShowSaleInfo.getRollCallShowList().isEmpty()) {
+                            if (Integer.parseInt(rollCallShowSaleInfo.getSize()) == 0) {
                                 Looper.prepare();
                                 Toast.makeText(getActivity(), "查询成功，未找到符合条件的学员名单！", Toast.LENGTH_SHORT).show();
                                 EventBus.getDefault().post(new RollCallShowEvent(rollCallShowSaleInfo));
@@ -297,6 +323,14 @@ public class RollCallFragment extends Fragment {
                         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                         TextView roll_call_begin_date_choice_value_view = getActivity().findViewById(R.id.roll_call_begin_date_choice_value);
                         TextView roll_call_begin_date_choice_value_att_view = getActivity().findViewById(R.id.roll_call_begin_date_choice_value_att);
+
+                        //在此尝试获取SharedPreferences对象信息
+                        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("loginUserToken", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("rollCallDateValue", sdf.format(date));
+                        editor.putString("rollCallDateName", sdf.format(date));
+                        editor.commit();
+
                         roll_call_begin_date_choice_value_view.setText(sdf.format(date));
                         roll_call_begin_date_choice_value_att_view.setText(sdf.format(date));
                     }
@@ -311,40 +345,86 @@ public class RollCallFragment extends Fragment {
         roll_call_linearLayout3_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TimePickerView pvTime = new TimePickerBuilder(getActivity(), new OnTimeSelectListener() {
-                    @Override
-                    public void onTimeSelect(Date date, View v) {//选中事件回调
-                        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-                        TextView roll_call_begin_time_choice_value_view = getActivity().findViewById(R.id.roll_call_begin_time_choice_value);
-                        TextView roll_call_begin_time_choice_value_att_view = getActivity().findViewById(R.id.roll_call_begin_time_choice_value_att);
-                        roll_call_begin_time_choice_value_view.setText(sdf.format(date));
-                        roll_call_begin_time_choice_value_att_view.setText(sdf.format(date).replaceAll(":", ""));
-                    }
-                }).setType(new boolean[]{false, false, false, true, true, false}).build();
-                pvTime.setDate(Calendar.getInstance());
-                pvTime.show();
+                TextView roll_call_address_choice_value_att_view = getActivity().findViewById(R.id.roll_call_address_choice_value_att);
+                TextView roll_call_begin_date_choice_value_att_view = getActivity().findViewById(R.id.roll_call_begin_date_choice_value_att);
+                if (roll_call_address_choice_value_att_view.getText() == null||roll_call_address_choice_value_att_view.getText().toString().equals("")) {
+                    Toast.makeText(getActivity(), "请选择泳池！", Toast.LENGTH_SHORT).show();
+                }
+                else if (roll_call_begin_date_choice_value_att_view.getText() == null || roll_call_begin_date_choice_value_att_view.getText().toString().equals("")) {
+                    Toast.makeText(getActivity(), "请选择开始日期！", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    String courseAddress = roll_call_address_choice_value_att_view.getText().toString().trim();
+                    String dateStr = roll_call_begin_date_choice_value_att_view.getText().toString().trim();
+                    //获取网络上的servlet路径
+                    String path="http://120.79.137.103:10080/kidswim/att/rollcall/findAllBeginTimeByAddressAndDate";
+                    OkHttpClient client = new OkHttpClient();
+                    RequestBody body = new FormBody.Builder()
+                            .add("courseAddress", courseAddress)
+                            .add("dateStr", dateStr)
+                            .build();
+                    okhttp3.Request request = new okhttp3.Request.Builder()
+                            .url(path)
+                            .post(body)
+                            .build();
+                    Call call = client.newCall(request);
+
+                    call.enqueue(new Callback() {
+                        @Override
+                        public void onFailure(Call call, IOException e) {
+                        }
+                        @Override
+                        public void onResponse(Call call, okhttp3.Response response) throws IOException {
+                            Message message = Message.obtain();
+                            message.what = 1;
+                            message.obj = response.body().string();
+
+                            String objStr =  message.obj.toString();
+                            JsonUtil jsonUtil = new JsonUtil();
+                            RollBeginTimeShow rollBeginTimeShow = jsonUtil.json2Object(objStr, RollBeginTimeShow.class);
+                            EventBus.getDefault().post(new RollShowBeginTimeEvent(rollBeginTimeShow));
+                        }
+                    });
+                }
             }
         });
 
-        //上课结束时间点击事件
-        final LinearLayout roll_call_linearLayout4_view = getActivity().findViewById(R.id.roll_call_linearLayout4);
-        roll_call_linearLayout4_view.setOnClickListener(new View.OnClickListener() {
+    }
+
+    /**
+     * onEvent事件，显示开始时间选择
+     * @param event
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(RollShowBeginTimeEvent event) {
+        RollBeginTimeShow rollBeginTimeShow = event.getRollBeginTimeShow();
+        final TextView roll_call_begin_time_choice_value_view = getView().findViewById(R.id.roll_call_begin_time_choice_value);
+        final List<RollBeginTimeShow.BeginTimeListInfo> timeList = rollBeginTimeShow.getBeginTimeList();
+        OptionsPickerView pvOptions = new OptionsPickerBuilder(getActivity(), new OnOptionsSelectListener() {
             @Override
-            public void onClick(View v) {
-                TimePickerView pvTime = new TimePickerBuilder(getActivity(), new OnTimeSelectListener() {
-                    @Override
-                    public void onTimeSelect(Date date, View v) {//选中事件回调
-                        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-                        TextView roll_call_end_time_choice_value_view = getActivity().findViewById(R.id.roll_call_end_time_choice_value);
-                        TextView roll_call_end_time_choice_value_att_view = getActivity().findViewById(R.id.roll_call_end_time_choice_value_att);
-                        roll_call_end_time_choice_value_view.setText(sdf.format(date));
-                        roll_call_end_time_choice_value_att_view.setText(sdf.format(date).replaceAll(":", ""));
-                    }
-                }).setType(new boolean[]{false, false, false, true, true, false}).build();
-                pvTime.setDate(Calendar.getInstance());
-                pvTime.show();
+            public void onOptionsSelect(int options1, int option2, int options3 ,View v) {
+                //返回的分别是三个级别的选中位置
+                String value = timeList.get(options1).getSelectTime();
+                String tx = timeList.get(options1).getShowTime() ;
+
+                //在此尝试获取SharedPreferences对象信息
+                SharedPreferences sharedPreferences = getActivity().getSharedPreferences("loginUserToken", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("rollCallBeginTtimeValue", value);
+                editor.putString("rollCallBeginTtimeName", tx);
+                editor.commit();
+
+                roll_call_begin_time_choice_value_view.setText(tx);
+                final TextView roll_call_begin_time_choice_value_att_view = getActivity().findViewById(R.id.roll_call_begin_time_choice_value_att);
+                roll_call_begin_time_choice_value_att_view.setText(value);
             }
-        });
+        }).build();
+        List<String> nameList = new ArrayList<String>();
+        for (RollBeginTimeShow.BeginTimeListInfo time: timeList) {
+            nameList.add(time.getShowTime());
+        }
+        pvOptions.setPicker(nameList);
+        pvOptions.show();
     }
 
     /**
@@ -464,6 +544,14 @@ public class RollCallFragment extends Fragment {
                 //返回的分别是三个级别的选中位置
                 String value = dicts.get(options1).getValue();
                 String tx = dicts.get(options1).getLabel() ;
+
+                //在此尝试获取SharedPreferences对象信息
+                SharedPreferences sharedPreferences = getActivity().getSharedPreferences("loginUserToken", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("rollCallAddressValue", value);
+                editor.putString("rollCallAddressName", tx);
+                editor.commit();
+
                 roll_call_address_choice_value_view.setText(tx);
                 final TextView roll_call_address_choice_value_att_view = getActivity().findViewById(R.id.roll_call_address_choice_value_att);
                 roll_call_address_choice_value_att_view.setText(value);

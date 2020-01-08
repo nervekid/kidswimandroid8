@@ -9,14 +9,14 @@
     <LinearLayout
         android:id="@+id/grllery_linearLayout1"
         android:layout_width="0dp"
-        android:layout_height="35dp"
+        android:layout_height="60dp"
         android:layout_marginTop="1dp"
         android:background="@drawable/underline"
         android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/grllery_linearLayout2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintStart_toStartOf="parent">
 
         <TextView
             android:id="@+id/grllery_choice_address"
@@ -45,12 +45,13 @@
     <LinearLayout
         android:id="@+id/grllery_linearLayout2"
         android:layout_width="0dp"
-        android:layout_height="35dp"
-        android:layout_marginTop="48dp"
+        android:layout_height="60dp"
         android:background="@drawable/underline"
         android:orientation="horizontal"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="grllery_linearLayout1"
+        app:layout_constraintBottom_toTopOf="@+id/grllery_linearLayout3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <TextView
             android:id="@+id/grllery_choice_begin_date"
@@ -61,7 +62,7 @@
 
         <TextView
             android:id="@+id/grllery_begin_date_choice_value"
-            android:layout_width="307dp"
+            android:layout_width="334dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="未选择"
@@ -79,12 +80,13 @@
     <LinearLayout
         android:id="@+id/grllery_linearLayout3"
         android:layout_width="0dp"
-        android:layout_height="35dp"
-        android:layout_marginTop="88dp"
+        android:layout_height="60dp"
         android:background="@drawable/underline"
         android:orientation="horizontal"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="grllery_linearLayou2"
+        app:layout_constraintBottom_toTopOf="@+id/grllery_linearLayout7"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <TextView
             android:id="@+id/grllery_choice_lean_begin"
@@ -95,7 +97,7 @@
 
         <TextView
             android:id="@+id/grllery_lean_begin_choice_value"
-            android:layout_width="307dp"
+            android:layout_width="334dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="未选择"
@@ -113,40 +115,40 @@
     <LinearLayout
         android:id="@+id/grllery_linearLayout7"
         android:layout_width="0dp"
-        android:layout_height="35dp"
-        android:layout_marginTop="128dp"
+        android:layout_height="60dp"
         android:background="@drawable/underline"
         android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="grllery_linearLayout3"
+        app:layout_constraintBottom_toTopOf="@+id/grllery_linearLayout4"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintStart_toStartOf="parent">
 
         <Button
             android:id="@+id/gallery_query_button18"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
-            android:textColor="#FFFFFF"
-            android:text="@string/query_button" />
+            android:text="@string/query_button"
+            android:textColor="#FFFFFF" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/grllery_linearLayout4"
         android:layout_width="0dp"
-        android:layout_height="140dp"
-        android:layout_marginTop="8dp"
+        android:layout_height="220dp"
         android:background="@drawable/underline"
         android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="grllery_linearLayout7"
+        app:layout_constraintBottom_toTopOf="@+id/grllery_linearLayout5"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/grllery_linearLayout7">
+        app:layout_constraintStart_toStartOf="parent">
 
         <TextView
             android:id="@+id/grllery_linearLayout4_textview_1"
             android:layout_width="40dp"
             android:layout_height="match_parent"
-            android:gravity="center"
             android:layout_weight="1"
+            android:gravity="center"
             android:text="@string/str_gallery_unjoin_sale_num"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
@@ -160,24 +162,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/underline"
-                android:orientation="vertical">
-            </LinearLayout>
+                android:orientation="vertical"></LinearLayout>
         </ScrollView>
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/grllery_linearLayout5"
         android:layout_width="0dp"
-        android:layout_height="140dp"
-        android:layout_marginTop="8dp"
+        android:layout_height="220dp"
         android:layout_marginStart="1dp"
         android:layout_marginEnd="1dp"
         android:layout_marginBottom="1dp"
-        android:orientation="horizontal"
         android:background="@drawable/underline"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="grllery_linearLayout4"
+        app:layout_constraintBottom_toTopOf="@+id/grllery_linearLayout6"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/grllery_linearLayout4">
+        app:layout_constraintStart_toStartOf="parent">
 
         <TextView
             android:id="@+id/textView6"
@@ -197,8 +198,7 @@
                 android:id="@+id/grllery_linearLayout5_show_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" >
-            </LinearLayout>
+                android:orientation="vertical"></LinearLayout>
         </ScrollView>
 
     </LinearLayout>
@@ -207,7 +207,6 @@
         android:id="@+id/grllery_linearLayout6"
         android:layout_width="409dp"
         android:layout_height="46dp"
-        android:layout_marginTop="8dp"
         android:layout_marginStart="1dp"
         android:layout_marginEnd="1dp"
         android:orientation="horizontal"
