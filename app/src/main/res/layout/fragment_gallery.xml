@@ -1,229 +1,231 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/gallery_con_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/grllery_linearLayout1"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="1dp"
-        android:background="@drawable/underline"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/grllery_linearLayout2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/grllery_choice_address"
-            android:layout_width="100dp"
-            android:layout_height="match_parent"
-            android:background="#00C7C4C4"
-            android:text="@string/str_group_choice_address" />
+        <LinearLayout
+            android:id="@+id/grllery_linearLayout1"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="1dp"
+            android:background="@drawable/underline"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/grllery_linearLayout2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
-        <TextView
-            android:id="@+id/grllery_address_choice_value"
-            android:layout_width="307dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="未选择"
-            android:textAlignment="viewEnd" />
+            <TextView
+                android:id="@+id/grllery_choice_address"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:background="#00C7C4C4"
+                android:text="@string/str_group_choice_address" />
 
-        <TextView
-            android:id="@+id/grllery_address_choice_value_att"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:textAlignment="viewEnd"
-            android:visibility="gone" />
-    </LinearLayout>
+            <TextView
+                android:id="@+id/grllery_address_choice_value"
+                android:layout_width="307dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="未选择"
+                android:textAlignment="viewEnd" />
 
-    <LinearLayout
-        android:id="@+id/grllery_linearLayout2"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:background="@drawable/underline"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toTopOf="grllery_linearLayout1"
-        app:layout_constraintBottom_toTopOf="@+id/grllery_linearLayout3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+            <TextView
+                android:id="@+id/grllery_address_choice_value_att"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textAlignment="viewEnd"
+                android:visibility="gone" />
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/grllery_choice_begin_date"
-            android:layout_width="100dp"
-            android:layout_height="match_parent"
-            android:background="#00C7C4C4"
-            android:text="@string/str_group_choice_group_begin_date" />
+        <LinearLayout
+            android:id="@+id/grllery_linearLayout2"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:background="@drawable/underline"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@+id/grllery_linearLayout3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
-        <TextView
-            android:id="@+id/grllery_begin_date_choice_value"
-            android:layout_width="334dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="未选择"
-            android:textAlignment="viewEnd" />
+            <TextView
+                android:id="@+id/grllery_choice_begin_date"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:background="#00C7C4C4"
+                android:text="@string/str_group_choice_group_begin_date" />
 
-        <TextView
-            android:id="@+id/grllery_begin_date_choice_value_att"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:textAlignment="viewEnd"
-            android:visibility="gone" />
-    </LinearLayout>
+            <TextView
+                android:id="@+id/grllery_begin_date_choice_value"
+                android:layout_width="334dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="未选择"
+                android:textAlignment="viewEnd" />
 
-    <LinearLayout
-        android:id="@+id/grllery_linearLayout3"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:background="@drawable/underline"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toTopOf="grllery_linearLayou2"
-        app:layout_constraintBottom_toTopOf="@+id/grllery_linearLayout7"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+            <TextView
+                android:id="@+id/grllery_begin_date_choice_value_att"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textAlignment="viewEnd"
+                android:visibility="gone" />
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/grllery_choice_lean_begin"
-            android:layout_width="100dp"
-            android:layout_height="match_parent"
-            android:background="#00C7C4C4"
-            android:text="@string/str_group_choice_learn_begin_time" />
+        <LinearLayout
+            android:id="@+id/grllery_linearLayout3"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:background="@drawable/underline"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@+id/grllery_linearLayout7"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
-        <TextView
-            android:id="@+id/grllery_lean_begin_choice_value"
-            android:layout_width="334dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="未选择"
-            android:textAlignment="viewEnd" />
+            <TextView
+                android:id="@+id/grllery_choice_lean_begin"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:background="#00C7C4C4"
+                android:text="@string/str_group_choice_learn_begin_time" />
 
-        <TextView
-            android:id="@+id/grllery_lean_begin_choice_value_att"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:textAlignment="viewEnd"
-            android:visibility="gone" />
-    </LinearLayout>
+            <TextView
+                android:id="@+id/grllery_lean_begin_choice_value"
+                android:layout_width="334dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="未选择"
+                android:textAlignment="viewEnd" />
 
-    <LinearLayout
-        android:id="@+id/grllery_linearLayout7"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:background="@drawable/underline"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toTopOf="grllery_linearLayout3"
-        app:layout_constraintBottom_toTopOf="@+id/grllery_linearLayout4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+            <TextView
+                android:id="@+id/grllery_lean_begin_choice_value_att"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textAlignment="viewEnd"
+                android:visibility="gone" />
+        </LinearLayout>
 
-        <Button
-            android:id="@+id/gallery_query_button18"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:text="@string/query_button"
-            android:textColor="#FFFFFF" />
-    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/grllery_linearLayout7"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:background="@drawable/underline"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@+id/grllery_linearLayout4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
-    <LinearLayout
-        android:id="@+id/grllery_linearLayout4"
-        android:layout_width="0dp"
-        android:layout_height="220dp"
-        android:background="@drawable/underline"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toTopOf="grllery_linearLayout7"
-        app:layout_constraintBottom_toTopOf="@+id/grllery_linearLayout5"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <TextView
-            android:id="@+id/grllery_linearLayout4_textview_1"
-            android:layout_width="40dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="@string/str_gallery_unjoin_sale_num"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-
-            <LinearLayout
-                android:id="@+id/grllery_linearLayout4_show_layout"
+            <Button
+                android:id="@+id/gallery_query_button18"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/underline"
-                android:orientation="vertical"></LinearLayout>
-        </ScrollView>
-    </LinearLayout>
+                android:background="@color/colorPrimary"
+                android:text="@string/query_button"
+                android:textColor="#FFFFFF" />
+        </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/grllery_linearLayout5"
-        android:layout_width="0dp"
-        android:layout_height="220dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginEnd="1dp"
-        android:layout_marginBottom="1dp"
-        android:background="@drawable/underline"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toTopOf="grllery_linearLayout4"
-        app:layout_constraintBottom_toTopOf="@+id/grllery_linearLayout6"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        <LinearLayout
+            android:id="@+id/grllery_linearLayout4"
+            android:layout_width="0dp"
+            android:layout_height="220dp"
+            android:background="@drawable/underline"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@+id/grllery_linearLayout5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
-        <TextView
-            android:id="@+id/textView6"
-            android:layout_width="39dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="@string/str_gallery_created_group_code"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+            <TextView
+                android:id="@+id/grllery_linearLayout4_textview_1"
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/str_gallery_unjoin_sale_num"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-
-            <LinearLayout
-                android:id="@+id/grllery_linearLayout5_show_layout"
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"></LinearLayout>
-        </ScrollView>
+                android:layout_height="match_parent"
+                android:layout_weight="1">
 
-    </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/grllery_linearLayout4_show_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/underline"
+                    android:orientation="vertical"></LinearLayout>
+            </ScrollView>
+        </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/grllery_linearLayout6"
-        android:layout_width="409dp"
-        android:layout_height="46dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginEnd="1dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/grllery_linearLayout5">
+        <LinearLayout
+            android:id="@+id/grllery_linearLayout5"
+            android:layout_width="0dp"
+            android:layout_height="220dp"
+            android:layout_marginStart="1dp"
+            android:layout_marginEnd="1dp"
+            android:layout_marginBottom="1dp"
+            android:background="@drawable/underline"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@+id/grllery_linearLayout6"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
-        <Button
-            android:id="@+id/grllery_create_group_button"
-            android:layout_width="90dp"
-            android:layout_height="40dp"
-            android:layout_marginLeft="5dp"
-            android:layout_weight="1"
-            android:background="@color/colorPrimary"
-            android:text="@string/str_gallery_create_group"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp" />
-    </LinearLayout>
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="39dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/str_gallery_created_group_code"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <LinearLayout
+                    android:id="@+id/grllery_linearLayout5_show_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"></LinearLayout>
+            </ScrollView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/grllery_linearLayout6"
+            android:layout_width="409dp"
+            android:layout_height="46dp"
+            android:layout_marginStart="1dp"
+            android:layout_marginEnd="1dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/grllery_linearLayout5">
+
+            <Button
+                android:id="@+id/grllery_create_group_button"
+                android:layout_width="90dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:text="@string/str_gallery_create_group"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>
