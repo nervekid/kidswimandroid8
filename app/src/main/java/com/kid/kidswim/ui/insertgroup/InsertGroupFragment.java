@@ -424,4 +424,10 @@ public class InsertGroupFragment extends Fragment {
         pvOptions.setPicker(nameList);
         pvOptions.show();
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        EventBus.getDefault().unregister(this);
+    }
 }
