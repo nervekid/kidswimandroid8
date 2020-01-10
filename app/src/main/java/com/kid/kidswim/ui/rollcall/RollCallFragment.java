@@ -30,6 +30,7 @@ import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.bigkoo.pickerview.view.TimePickerView;
+import com.kid.kidswim.LoginActivity;
 import com.kid.kidswim.R;
 import com.kid.kidswim.command.GroupDetailsSituationInfo;
 import com.kid.kidswim.command.IdAndName;
@@ -439,8 +440,6 @@ public class RollCallFragment extends Fragment {
         for (int i = 0; i < rollCallShowSaleInfo.getRollCallShowList().size(); i++) {
             final Button btn = new Button(getActivity());
             btn.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 100));
-            btn.setBackgroundColor(Color.parseColor("#F0F0F0"));
-            btn.setTextColor(Color.parseColor("#000000"));
             StringBuffer strBuff = new StringBuffer();
             strBuff.append("级别:");
             strBuff.append(rollCallShowSaleInfo.getRollCallShowList().get(i).getCourseLevel());
@@ -448,48 +447,81 @@ public class RollCallFragment extends Fragment {
             strBuff.append(rollCallShowSaleInfo.getRollCallShowList().get(i).getStudentName());
             strBuff.append("-");
             strBuff.append("点名状态:");
+
+            if (rollCallShowSaleInfo.getRollCallShowList().get(i).getRollCallStatusFlag().equals(KidswimAttEnum.rollCallStatusFlag.未点名.getName())) {
+                btn.setBackgroundColor(Color.parseColor("#F0F0F0"));
+                btn.setTextColor(Color.parseColor("#000000"));
+            }
+            else if (rollCallShowSaleInfo.getRollCallShowList().get(i).getRollCallStatusFlag().equals(KidswimAttEnum.rollCallStatusFlag.出席.getName())) {
+                btn.setBackgroundColor(Color.parseColor("#33FF33"));
+                btn.setTextColor(Color.parseColor("#000000"));
+            }
+            else if (rollCallShowSaleInfo.getRollCallShowList().get(i).getRollCallStatusFlag().equals(KidswimAttEnum.rollCallStatusFlag.缺席.getName())) {
+                btn.setBackgroundColor(Color.parseColor("#C80000"));
+                btn.setTextColor(Color.parseColor("#FFFFFF"));
+            }
+            else if (rollCallShowSaleInfo.getRollCallShowList().get(i).getRollCallStatusFlag().equals(KidswimAttEnum.rollCallStatusFlag.请假.getName())) {
+                btn.setBackgroundColor(Color.parseColor("#0033FF"));
+                btn.setTextColor(Color.parseColor("#FFFFFF"));
+            }
+            else {
+                //事故
+                btn.setBackgroundColor(Color.parseColor("#000000"));
+                btn.setTextColor(Color.parseColor("#FFFFFF"));
+            }
+            strBuff.append(rollCallShowSaleInfo.getRollCallShowList().get(i).getRollCallStatusName());
             btn.setText(strBuff.toString());
             ViewGroup.MarginLayoutParams margin = new ViewGroup.MarginLayoutParams(btn.getLayoutParams());
-            margin.setMargins(margin.leftMargin, 10, margin.rightMargin, margin.bottomMargin);
+            margin.setMargins(margin.leftMargin, 20, margin.rightMargin, margin.bottomMargin);
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(margin);
             btn.setLayoutParams(layoutParams);
             btn.setId(i);
             roll_call_linearLayout1_show_layout_view.addView(btn);
+            if (rollCallShowSaleInfo.getRollCallShowList().get(i).getRollCallStatusFlag().equals(KidswimAttEnum.rollCallStatusFlag.未点名.getName())) {
+                btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //获取网络上的servlet路径
+                        String path = "http://120.79.137.103:10080/kidswim/att/base/findDictListByType";
+                        OkHttpClient client = new OkHttpClient();
+                        RequestBody body = new FormBody.Builder()
+                                .add("type", KidswimAttEnum.kidswimFlag.點名類別.getName())
+                                .build();
+                        okhttp3.Request request = new okhttp3.Request.Builder()
+                                .url(path)
+                                .post(body)
+                                .build();
+                        Call call = client.newCall(request);
 
-            btn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //获取网络上的servlet路径
-                    String path="http://120.79.137.103:10080/kidswim/att/base/findDictListByType";
-                    OkHttpClient client = new OkHttpClient();
-                    RequestBody body = new FormBody.Builder()
-                            .add("type", KidswimAttEnum.kidswimFlag.點名類別.getName())
-                            .build();
-                    okhttp3.Request request = new okhttp3.Request.Builder()
-                            .url(path)
-                            .post(body)
-                            .build();
-                    Call call = client.newCall(request);
+                        call.enqueue(new Callback() {
+                            @Override
+                            public void onFailure(Call call, IOException e) {
+                            }
 
-                    call.enqueue(new Callback() {
-                        @Override
-                        public void onFailure(Call call, IOException e) {
-                        }
-                        @Override
-                        public void onResponse(Call call, okhttp3.Response response) throws IOException {
-                            Message message = Message.obtain();
-                            message.what = 1;
-                            message.obj = response.body().string();
+                            @Override
+                            public void onResponse(Call call, okhttp3.Response response) throws IOException {
+                                Message message = Message.obtain();
+                                message.what = 1;
+                                message.obj = response.body().string();
 
-                            String objStr =  message.obj.toString();
-                            JsonUtil jsonUtil = new JsonUtil();
-                            SysDictInfo sysDictInfo = jsonUtil.json2Object(objStr, SysDictInfo.class);
-                            EventBus.getDefault().post(new RollCallStatusEvent(rollCallShowSaleInfo.getRollCallShowList().get(btn.getId()),
-                                    sysDictInfo, btn));
-                        }
-                    });
-                }
-            });
+                                String objStr = message.obj.toString();
+                                JsonUtil jsonUtil = new JsonUtil();
+                                SysDictInfo sysDictInfo = jsonUtil.json2Object(objStr, SysDictInfo.class);
+                                EventBus.getDefault().post(new RollCallStatusEvent(rollCallShowSaleInfo.getRollCallShowList().get(btn.getId()),
+                                        sysDictInfo, btn));
+                            }
+                        });
+                    }
+                });
+            }
+            else {
+                btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(getActivity(), "已经完成点名的无法再次点名！", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
         }
     }
 
@@ -516,7 +548,14 @@ public class RollCallFragment extends Fragment {
                     btn.setText(nowString);
                 }
                 btn.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 100));
-                btn.setBackgroundColor(Color.parseColor("#1AFD9C"));
+                btn.setBackgroundColor(Color.parseColor("#FFFF33"));
+                btn.setTextColor(Color.parseColor("#000000"));
+
+                ViewGroup.MarginLayoutParams margin = new ViewGroup.MarginLayoutParams(btn.getLayoutParams());
+                margin.setMargins(margin.leftMargin, 20, margin.rightMargin, margin.bottomMargin);
+                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(margin);
+                btn.setLayoutParams(layoutParams);
+
                 checkIdandNameMap.put(rollCallShowInfo.getStudentId(), new RollCallCommand(rollCallShowInfo.getCourseDetailsId(),
                         rollCallShowInfo.getStudentId(), value));
             }

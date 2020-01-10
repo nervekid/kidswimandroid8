@@ -29,20 +29,58 @@ public class RollCallShowSaleInfo {
         @JsonProperty("courseLevel")
         private String courseLevel;
 
+        @JsonProperty("rollCallStatusFlag")
+        private String rollCallStatusFlag;
+
+        @JsonProperty("rollCallStatusName")
+        private String rollCallStatusName;
+
         public String getCourseDetailsId() {
             return courseDetailsId;
+        }
+
+        public void setCourseDetailsId(String courseDetailsId) {
+            this.courseDetailsId = courseDetailsId;
         }
 
         public String getStudentId() {
             return studentId;
         }
 
+        public void setStudentId(String studentId) {
+            this.studentId = studentId;
+        }
+
         public String getStudentName() {
             return studentName;
         }
 
+        public void setStudentName(String studentName) {
+            this.studentName = studentName;
+        }
+
         public String getCourseLevel() {
             return courseLevel;
+        }
+
+        public void setCourseLevel(String courseLevel) {
+            this.courseLevel = courseLevel;
+        }
+
+        public String getRollCallStatusFlag() {
+            return rollCallStatusFlag;
+        }
+
+        public void setRollCallStatusFlag(String rollCallStatusFlag) {
+            this.rollCallStatusFlag = rollCallStatusFlag;
+        }
+
+        public String getRollCallStatusName() {
+            return rollCallStatusName;
+        }
+
+        public void setRollCallStatusName(String rollCallStatusName) {
+            this.rollCallStatusName = rollCallStatusName;
         }
     }
 

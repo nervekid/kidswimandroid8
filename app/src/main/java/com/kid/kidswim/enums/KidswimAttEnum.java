@@ -26,6 +26,29 @@ public class KidswimAttEnum {
         }
     }
 
+    public enum rollCallStatusFlag {
+
+        未点名("0"),
+        出席("1"),
+        缺席("2"),
+        请假("3"),
+        事故("4");
+
+        private String name;
+
+        private rollCallStatusFlag(String name) {
+            this.name = name;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+    }
+
     public enum kidswimFlag {
 
         課程地址("course_addrese_flag"),
