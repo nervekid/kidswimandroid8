@@ -27,19 +27,21 @@ import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.bigkoo.pickerview.view.TimePickerView;
 import com.kid.kidswim.R;
+import com.kid.kidswim.command.CourseBeginTimeInfo;
 import com.kid.kidswim.command.GroupDetailsSituationInfo;
-import com.kid.kidswim.command.GroupInfo;
+import com.kid.kidswim.command.RollBeginTimeShow;
 import com.kid.kidswim.command.SysDictInfo;
 import com.kid.kidswim.enums.KidswimAttEnum;
 import com.kid.kidswim.events.AddGroupAddressEvent;
 import com.kid.kidswim.events.GroupDetailsShowEvent;
 import com.kid.kidswim.events.JumpToAddGroupFragmentEvent;
+import com.kid.kidswim.events.RollShowBeginTimeEvent;
+import com.kid.kidswim.events.ShowCourseBeginTimeEvent;
 import com.kid.kidswim.utlis.JsonUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -80,8 +82,8 @@ public class GalleryFragment extends Fragment {
 
             final String courseAddressValue = sharedPreferences.getString("courseAddressValue", "");
             final String groupBeginTimeStrValue = sharedPreferences.getString("groupBeginTimeStrValue", "");
-            final String groupLearnBeginTimeValue = sharedPreferences.getString("groupLearnBeginTimeValue", "");
             final String courseAddressNameValue = sharedPreferences.getString("courseAddressName", "");
+            final String groupLearnBeginTimeValue = sharedPreferences.getString("groupLearnBeginTimeValue", "");
             final String groupLearnBeginTimeStrValue = sharedPreferences.getString("groupLearnBeginTimeStrValue", "");
             TextView grllery_address_choice_value_view = getActivity().findViewById(R.id.grllery_address_choice_value);
             grllery_address_choice_value_view.setText(courseAddressNameValue);
@@ -238,18 +240,48 @@ public class GalleryFragment extends Fragment {
         learn_begin_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TimePickerView pvTime = new TimePickerBuilder(getActivity(), new OnTimeSelectListener() {
-                    @Override
-                    public void onTimeSelect(Date date, View v) {//选中事件回调
-                        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-                        TextView learn_begin_choice_valueView = getActivity().findViewById(R.id.grllery_lean_begin_choice_value);
-                        TextView learn_begin_choice_value_attView = getActivity().findViewById(R.id.grllery_lean_begin_choice_value_att);
-                        learn_begin_choice_valueView.setText(sdf.format(date));
-                        learn_begin_choice_value_attView.setText(sdf.format(date).replaceAll(":", ""));
-                    }
-                }).setType(new boolean[]{false, false, false, true, true, false}).build();
-                pvTime.setDate(Calendar.getInstance());
-                pvTime.show();
+                TextView grllery_address_choice_value_att_view = getActivity().findViewById(R.id.grllery_address_choice_value_att);
+                TextView grllery_begin_date_choice_value_att_view = getActivity().findViewById(R.id.grllery_begin_date_choice_value_att);
+                if (grllery_address_choice_value_att_view.getText() == null||grllery_address_choice_value_att_view.getText().toString().equals("")) {
+                    Toast.makeText(getActivity(), "请选择泳池！", Toast.LENGTH_SHORT).show();
+                }
+                else if (grllery_begin_date_choice_value_att_view.getText() == null || grllery_begin_date_choice_value_att_view.getText().toString().equals("")) {
+                    Toast.makeText(getActivity(), "请选择开始日期！", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    String courseAddress = grllery_address_choice_value_att_view.getText().toString().trim();
+                    String dateStr = grllery_begin_date_choice_value_att_view.getText().toString().trim();
+                    //获取网络上的servlet路径
+                    String path="http://120.79.137.103:10080/kidswim/att/group/findCourseBeginTimeList";
+                    OkHttpClient client = new OkHttpClient();
+                    RequestBody body = new FormBody.Builder()
+                            .add("courseAddress", courseAddress)
+                            .add("beginDateStr", dateStr)
+                            .build();
+                    okhttp3.Request request = new okhttp3.Request.Builder()
+                            .url(path)
+                            .post(body)
+                            .build();
+                    Call call = client.newCall(request);
+
+                    call.enqueue(new Callback() {
+                        @Override
+                        public void onFailure(Call call, IOException e) {
+                        }
+                        @Override
+                        public void onResponse(Call call, okhttp3.Response response) throws IOException {
+                            Message message = Message.obtain();
+                            message.what = 1;
+                            message.obj = response.body().string();
+
+                            String objStr =  message.obj.toString();
+                            JsonUtil jsonUtil = new JsonUtil();
+                            CourseBeginTimeInfo CourseBeginTimeInfo = jsonUtil.json2Object(objStr, CourseBeginTimeInfo.class);
+                            EventBus.getDefault().post(new ShowCourseBeginTimeEvent(CourseBeginTimeInfo));
+                        }
+                    });
+                }
+
             }
         });
 
@@ -371,6 +403,51 @@ public class GalleryFragment extends Fragment {
                     navController.navigate(R.id.nav_insertgroup, bundle);
                 }
             });
+        }
+    }
+
+    /**
+     * onEvent事件，显示开始时间选择
+     * @param event
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(ShowCourseBeginTimeEvent event) {
+        CourseBeginTimeInfo info = event.getCourseBeginTimeInfo();
+
+        if (info.getInfoList().size() > 0) {
+            for (int i = 0; i < info.getInfoList().size(); i++) {
+                String beginTimStr = info.getInfoList().get(i).getBeginTimeStr();
+                String beginTimShowStr = beginTimStr.substring(0, 2) + ":" + beginTimStr.substring(2, 4);
+                info.getInfoList().get(i).setShowBeginTimeStr(beginTimShowStr);
+            }
+
+            final TextView grllery_lean_begin_choice_value_view = getView().findViewById(R.id.grllery_lean_begin_choice_value);
+            final List<CourseBeginTimeInfo.CourseBeginTimeDetailsInfo> timeList = info.getInfoList();
+            OptionsPickerView pvOptions = new OptionsPickerBuilder(getActivity(), new OnOptionsSelectListener() {
+                @Override
+                public void onOptionsSelect(int options1, int option2, int options3 ,View v) {
+                    //返回的分别是三个级别的选中位置
+                    String value = timeList.get(options1).getBeginTimeStr();
+                    String tx = timeList.get(options1).getShowBeginTimeStr() ;
+
+                    //在此尝试获取SharedPreferences对象信息
+                    SharedPreferences sharedPreferences = getActivity().getSharedPreferences("loginUserToken", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("groupLearnBeginTimeValue", value);
+                    editor.putString("groupLearnBeginTimeStrValue", tx);
+                    editor.commit();
+
+                    grllery_lean_begin_choice_value_view.setText(tx);
+                    final TextView grllery_lean_begin_choice_value_att_view = getActivity().findViewById(R.id.grllery_lean_begin_choice_value_att);
+                    grllery_lean_begin_choice_value_att_view.setText(value);
+                }
+            }).build();
+            List<String> nameList = new ArrayList<String>();
+            for (CourseBeginTimeInfo.CourseBeginTimeDetailsInfo time: timeList) {
+                nameList.add(time.getShowBeginTimeStr());
+            }
+            pvOptions.setPicker(nameList);
+            pvOptions.show();
         }
     }
 

@@ -269,7 +269,6 @@ public class InsertGroupFragment extends Fragment {
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(JumpToGalleryFragmentEvent event) {
-        Toast.makeText(getActivity(), "创建分组成功! 分组编号为:" + event.getCode(), Toast.LENGTH_SHORT).show();
         NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
         navController.navigate(R.id.nav_gallery);
     }

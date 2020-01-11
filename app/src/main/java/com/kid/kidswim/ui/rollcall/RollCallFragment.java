@@ -548,8 +548,23 @@ public class RollCallFragment extends Fragment {
                     btn.setText(nowString);
                 }
                 btn.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 100));
-                btn.setBackgroundColor(Color.parseColor("#FFFF33"));
-                btn.setTextColor(Color.parseColor("#000000"));
+                if (value.equals(KidswimAttEnum.rollCallStatusFlag.出席.getName())) {
+                    btn.setBackgroundColor(Color.parseColor("#33FF33"));
+                    btn.setTextColor(Color.parseColor("#000000"));
+                }
+                else if (value.equals(KidswimAttEnum.rollCallStatusFlag.缺席.getName())) {
+                    btn.setBackgroundColor(Color.parseColor("#C80000"));
+                    btn.setTextColor(Color.parseColor("#FFFFFF"));
+                }
+                else if (value.equals(KidswimAttEnum.rollCallStatusFlag.请假.getName())) {
+                    btn.setBackgroundColor(Color.parseColor("#0033FF"));
+                    btn.setTextColor(Color.parseColor("#FFFFFF"));
+                }
+                else {
+                    //事故
+                    btn.setBackgroundColor(Color.parseColor("#000000"));
+                    btn.setTextColor(Color.parseColor("#FFFFFF"));
+                }
 
                 ViewGroup.MarginLayoutParams margin = new ViewGroup.MarginLayoutParams(btn.getLayoutParams());
                 margin.setMargins(margin.leftMargin, 20, margin.rightMargin, margin.bottomMargin);
