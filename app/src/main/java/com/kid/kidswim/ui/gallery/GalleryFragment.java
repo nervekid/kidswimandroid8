@@ -26,6 +26,7 @@ import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.bigkoo.pickerview.view.TimePickerView;
+import com.kid.kidswim.DBC.Global;
 import com.kid.kidswim.R;
 import com.kid.kidswim.command.CourseBeginTimeInfo;
 import com.kid.kidswim.command.GroupDetailsSituationInfo;
@@ -121,7 +122,7 @@ public class GalleryFragment extends Fragment {
                     }
                     else {
                     //获取网络上的servlet路径
-                    String path="http://120.79.137.103:10080/kidswim/att/group/findCourseCorrespondSaleSituation";
+                    String path= Global.GlobalConfiguration.服务器链接.getName() +  "/att/group/findCourseCorrespondSaleSituation";
                     OkHttpClient client = new OkHttpClient();
                     RequestBody body = new FormBody.Builder()
                             .add("courseAddress", addressStr)
@@ -185,7 +186,7 @@ public class GalleryFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //获取网络上的servlet路径
-                String path="http://120.79.137.103:10080/kidswim/att/base/findDictListByType";
+                String path = Global.GlobalConfiguration.服务器链接.getName() + "/att/base/findDictListByType";
                 OkHttpClient client = new OkHttpClient();
                 RequestBody body = new FormBody.Builder()
                         .add("type", KidswimAttEnum.kidswimFlag.課程地址.getName())
@@ -252,7 +253,7 @@ public class GalleryFragment extends Fragment {
                     String courseAddress = grllery_address_choice_value_att_view.getText().toString().trim();
                     String dateStr = grllery_begin_date_choice_value_att_view.getText().toString().trim();
                     //获取网络上的servlet路径
-                    String path="http://120.79.137.103:10080/kidswim/att/group/findCourseBeginTimeList";
+                    String path= Global.GlobalConfiguration.服务器链接.getName() + "/att/group/findCourseBeginTimeList";
                     OkHttpClient client = new OkHttpClient();
                     RequestBody body = new FormBody.Builder()
                             .add("courseAddress", courseAddress)

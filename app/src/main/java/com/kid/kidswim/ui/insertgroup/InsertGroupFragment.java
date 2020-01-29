@@ -28,6 +28,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
+import com.kid.kidswim.DBC.Global;
 import com.kid.kidswim.R;
 import com.kid.kidswim.command.IdAndName;
 import com.kid.kidswim.command.SysDictInfo;
@@ -114,7 +115,7 @@ public class InsertGroupFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //获取网络上的servlet路径
-                String path="http://120.79.137.103:10080/kidswim/att/base/findDictListByType";
+                String path= Global.GlobalConfiguration.服务器链接.getName() +  "/att/base/findDictListByType";
                 OkHttpClient client = new OkHttpClient();
                 RequestBody body = new FormBody.Builder()
                         .add("type", KidswimAttEnum.kidswimFlag.課程對應級別.getName())
@@ -162,7 +163,7 @@ public class InsertGroupFragment extends Fragment {
                 TextView insert_group_level_choice_value_att_view = getActivity().findViewById(R.id.insert_group_level_choice_value_att);
                 String levelStr = (String) insert_group_level_choice_value_att_view.getText().toString();
                 //获取网络上的servlet路径
-                String path="http://120.79.137.103:10080/kidswim/att/group/findSaleStudentList";
+                String path= Global.GlobalConfiguration.服务器链接.getName() +  "/att/group/findSaleStudentList";
                 OkHttpClient client = new OkHttpClient();
                 RequestBody body = new FormBody.Builder()
                         .add("courseAddress", courseAddressValue)
@@ -208,7 +209,7 @@ public class InsertGroupFragment extends Fragment {
                         saleIds.add(idname.getKey());
                     }
                     //获取网络上的servlet路径
-                    String path="http://120.79.137.103:10080/kidswim/att/group/inertSerGroupDetails";
+                    String path= Global.GlobalConfiguration.服务器链接.getName() +   "/att/group/inertSerGroupDetails";
                     OkHttpClient client = new OkHttpClient();
                     JSONObject jsonObject = new JSONObject();
                     try {

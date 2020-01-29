@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 
+import com.kid.kidswim.DBC.Global;
 import com.kid.kidswim.command.UserInfo;
 import com.kid.kidswim.enums.KidswimAttEnum;
 import com.kid.kidswim.utlis.JsonUtil;
@@ -49,7 +50,7 @@ public class LoginActivity extends AppCompatActivity {
         String pass=password.getText().toString().trim();
 
         //获取网络上的servlet路径
-        String path="http://120.79.137.103:10080/kidswim/att/hall/login";
+        String path= Global.GlobalConfiguration.服务器链接.getName() +  "/att/hall/login";
         OkHttpClient client = new OkHttpClient();
         RequestBody body = new FormBody.Builder()
                 .add("userLoginName", name)

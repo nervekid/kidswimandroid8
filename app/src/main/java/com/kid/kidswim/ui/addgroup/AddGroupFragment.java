@@ -34,6 +34,7 @@ import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.bigkoo.pickerview.view.TimePickerView;
+import com.kid.kidswim.DBC.Global;
 import com.kid.kidswim.LoginActivity;
 import com.kid.kidswim.MainActivity;
 import com.kid.kidswim.R;
@@ -133,7 +134,7 @@ public class AddGroupFragment extends Fragment {
                         saleIds.add(idname.getKey());
                     }
                     //获取网络上的servlet路径
-                    String path="http://120.79.137.103:10080/kidswim/att/group/createSerGroup";
+                    String path= Global.GlobalConfiguration.服务器链接.getName() +  "/att/group/createSerGroup";
                     OkHttpClient client = new OkHttpClient();
                     JSONObject jsonObject = new JSONObject();
                     try {
@@ -199,7 +200,7 @@ public class AddGroupFragment extends Fragment {
                 TextView add_group_level_choice_value_att_view = getActivity().findViewById(R.id.add_group_level_choice_value_att);
                 String levelStr = (String) add_group_level_choice_value_att_view.getText().toString();
                 //获取网络上的servlet路径
-                String path="http://120.79.137.103:10080/kidswim/att/group/findSaleStudentList";
+                String path= Global.GlobalConfiguration.服务器链接.getName() +  "/att/group/findSaleStudentList";
                 OkHttpClient client = new OkHttpClient();
                 RequestBody body = new FormBody.Builder()
                         .add("courseAddress", addressStr)
@@ -237,7 +238,7 @@ public class AddGroupFragment extends Fragment {
         add_group_linearLayout1_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String path="http://120.79.137.103:10080/kidswim/att/hall/findAllCoach";
+                String path= Global.GlobalConfiguration.服务器链接.getName() +  "/att/hall/findAllCoach";
                 OkHttpClient client = new OkHttpClient();
 
                 okhttp3.Request request = new okhttp3.Request.Builder()
@@ -269,7 +270,7 @@ public class AddGroupFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //获取网络上的servlet路径
-                String path="http://120.79.137.103:10080/kidswim/att/base/findDictListByType";
+                String path= Global.GlobalConfiguration.服务器链接.getName() +  "/att/base/findDictListByType";
                 OkHttpClient client = new OkHttpClient();
                 RequestBody body = new FormBody.Builder()
                         .add("type", KidswimAttEnum.kidswimFlag.課程對應級別.getName())
